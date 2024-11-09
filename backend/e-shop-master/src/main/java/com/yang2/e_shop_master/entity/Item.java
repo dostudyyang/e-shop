@@ -29,4 +29,7 @@ public class Item {
 
     @Column(name = "price")
     private Integer price;
+
+    @Column(name = "img")
+    private String img;
 }
