@@ -1,4 +1,4 @@
-package com.yang2.e_shop_master.controller;
+package com.yang2.e_shop_master.config;
 
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.rest.core.config.RepositoryRestConfiguration;

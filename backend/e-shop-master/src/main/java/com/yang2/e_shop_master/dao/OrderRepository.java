@@ -1,0 +1,7 @@
+package com.yang2.e_shop_master.dao;
+
+import com.yang2.e_shop_master.entity.Order;
+import org.springframework.data.jpa.repository.JpaRepository;
+
+public interface OrderRepository extends JpaRepository<Order, Long> {
+}
