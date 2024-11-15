@@ -28,6 +28,10 @@ public class AddressService {
         return addressRepository.save(address);
     }
 
+    public Address findAddressByZip(String zip){
+        return addressRepository.findAddressByZip(zip);
+    }
+
 
 
 }

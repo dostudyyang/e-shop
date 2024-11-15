@@ -53,11 +53,21 @@ public class UserService {
 
     }
 
-    public void updateUserInfoWithPhoneAddressCreditCard(Long userId, UserRequest userRequest) throws Exception {
+    public void updateUserInfo(Long userId, UserRequest userRequest) throws Exception {
 
         Optional<User> user = userRepository.findById(userId);
         if (!user.isPresent()) {
             throw new Exception("User not found");
+        }
+
+        if (userRequest.getUserEmail() != null && !userRequest.getUserEmail().isEmpty()) {
+            user.get().setUserEmail(userRequest.getUserEmail());
+        }
+        if (userRequest.getFirstName() != null && !userRequest.getFirstName().isEmpty()) {
+            user.get().setFirstName(userRequest.getFirstName());
+        }
+        if (userRequest.getLastName() != null && !userRequest.getLastName().isEmpty()) {
+            user.get().setLastName(userRequest.getLastName());
         }
 
         user.get().setPhone(userRequest.getPhone());

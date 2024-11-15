@@ -25,25 +25,32 @@ public class UserController {
     /**
      *
      * @param userId
-     * @param userRequest phone, address(street, province, country, zip), creditCardNum
+     * @param userRequest userEmail, firstName, LastName,
+     *                    phone, address(street, province, country, zip), creditCardNum
      * @throws Exception
      */
     @PutMapping("/update/user")
-    public void updateUserInfoWithPhoneAddressCreditCard(
+    public void updateUserInfo(
             @RequestParam Long userId, @RequestBody UserRequest userRequest) throws Exception {
 
-        Address addressWithoutId = userRequest.getAddress();
+        Address currentAddress = addressService.findAddressByZip(userRequest.getAddress().getZip());
 
-        AddressRequest addressRequest = new AddressRequest();
-        addressRequest.setStreet(addressWithoutId.getStreet());
-        addressRequest.setProvince(addressWithoutId.getProvince());
-        addressRequest.setCountry(addressWithoutId.getCountry());
-        addressRequest.setZip(addressWithoutId.getZip());
+        if (currentAddress == null) {
+            Address addressWithoutId = userRequest.getAddress();
 
-        Address addressWithId = addressService.addAddress(addressRequest);
-        userRequest.setAddress(addressWithId);
+            AddressRequest addressRequest = new AddressRequest();
+            addressRequest.setStreet(addressWithoutId.getStreet());
+            addressRequest.setProvince(addressWithoutId.getProvince());
+            addressRequest.setCountry(addressWithoutId.getCountry());
+            addressRequest.setZip(addressWithoutId.getZip());
 
-        userService.updateUserInfoWithPhoneAddressCreditCard(userId, userRequest);
+            Address addressWithId = addressService.addAddress(addressRequest);
+            userRequest.setAddress(addressWithId);
+        }else {
+            userRequest.setAddress(currentAddress);
+        }
+
+        userService.updateUserInfo(userId, userRequest);
     }
 
     /**
