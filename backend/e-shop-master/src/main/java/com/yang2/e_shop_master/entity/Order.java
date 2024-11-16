@@ -1,13 +1,17 @@
 package com.yang2.e_shop_master.entity;
 import javax.persistence.*;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import org.hibernate.annotations.CreationTimestamp;
 
 import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
-@Table(name = "order")
+@Table(name = "orders")
 @Data
+@EqualsAndHashCode(exclude = "orderItems")
 public class Order {
 
     @Id
@@ -18,10 +22,21 @@ public class Order {
     @Column(name = "user_email")
     private String userEmail;
 
-    @Column(name = "item_id")
-    private Long itemId;
-
     @Column(name = "date")
     @CreationTimestamp
     private Date date;
+
+    @Column(name = "order_price")
+    private Double orderPrice;
+
+    @OneToMany(mappedBy = "order",
+            cascade = {CascadeType.PERSIST, CascadeType.MERGE,
+                    CascadeType.DETACH, CascadeType.REFRESH}, orphanRemoval = false)
+    private Set<OrderItems> orderItems = new HashSet<>();
+
+
+    public void addOrderItem(OrderItems orderItem) {
+        orderItems.add(orderItem);
+        orderItem.setOrder(this); // 维护双向关系
+    }
 }

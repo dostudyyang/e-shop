@@ -32,6 +32,29 @@ public class AddressService {
         return addressRepository.findAddressByZip(zip);
     }
 
+    /**
+     * Resolves an address by checking if it exists in the database.
+     * If it exists, returns the existing address; otherwise, creates and saves a new address.
+     *
+     * @param address The address to resolve.
+     * @return The resolved address.
+     */
+    public Address resolveAddress (Address address){
+        Address existingAddress = this.findAddressByZip(address.getZip());
+
+        if (existingAddress != null) {
+            return existingAddress;
+        }
+
+        AddressRequest addressRequest = new AddressRequest();
+        addressRequest.setStreet(address.getStreet());
+        addressRequest.setProvince(address.getProvince());
+        addressRequest.setCountry(address.getCountry());
+        addressRequest.setZip(address.getZip());
+
+        return this.addAddress(addressRequest);
+    }
+
 
 
 }

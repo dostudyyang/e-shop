@@ -58,28 +58,82 @@ CREATE TABLE `item` (
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
-DROP TABLE IF EXISTS `order`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `order` (
-  `id` BIGINT(20) NOT NULL AUTO_INCREMENT,
-  `user_email` varchar(45) DEFAULT NULL,
-  `item_id` BIGINT(20) DEFAULT NULL,
-  `date` datetime(6) DEFAULT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=latin1;
-/*!40101 SET character_set_client = @saved_cs_client */;
 
-DROP TABLE IF EXISTS `order_history`;
+
+-- DROP TABLE IF EXISTS `order`;
+-- /*!40101 SET @saved_cs_client     = @@character_set_client */;
+-- /*!40101 SET character_set_client = utf8 */;
+-- CREATE TABLE `order` (
+--   `id` BIGINT(20) NOT NULL AUTO_INCREMENT,
+--   `user_email` varchar(45) DEFAULT NULL,
+--   `date` datetime(6) DEFAULT NULL,
+--   `order_history_id` BIGINT(20) DEFAULT NULL,
+--   PRIMARY KEY (`id`),
+--   KEY `fk_order_history` (`order_history_id`),
+--   CONSTRAINT `fk_order_history` FOREIGN KEY (`order_history_id`) REFERENCES `order_history` (`id`) ON DELETE SET NULL
+-- ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=latin1;
+
+-- DROP TABLE IF EXISTS `order_items`;
+-- CREATE TABLE `order_items` (
+--   `id` BIGINT(20) NOT NULL AUTO_INCREMENT,
+--   `order_id` BIGINT(20) NOT NULL,
+--   `item_id` BIGINT(20) NOT NULL,
+--   `quantity` int(11) NOT NULL,
+--   PRIMARY KEY (`id`),
+--   KEY `fk_order` (`order_id`),
+--   KEY `fk_item` (`item_id`),
+--   CONSTRAINT `fk_order` FOREIGN KEY (`order_id`) REFERENCES `order` (`id`) ON DELETE CASCADE,
+--   CONSTRAINT `fk_item` FOREIGN KEY (`item_id`) REFERENCES `item` (`id`) ON DELETE CASCADE
+-- ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=latin1;
+
+-- DROP TABLE IF EXISTS `order_history`;
+-- /*!40101 SET @saved_cs_client     = @@character_set_client */;
+-- /*!40101 SET character_set_client = utf8 */;
+-- CREATE TABLE `order_history` (
+--   `id` BIGINT(20) NOT NULL AUTO_INCREMENT,
+--   `user_email` varchar(45) DEFAULT NULL,
+--   PRIMARY KEY (`id`)
+-- ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=latin1;
+-- /*!40101 SET character_set_client = @saved_cs_client */;
+
+
+DROP TABLE IF EXISTS `order_items`;
+DROP TABLE IF EXISTS `order`;
+-- DROP TABLE IF EXISTS `order_history`;
+
+
+-- /*!40101 SET @saved_cs_client     = @@character_set_client */;
+-- /*!40101 SET character_set_client = utf8 */;
+-- CREATE TABLE `order_history` (
+--   `id` BIGINT(20) NOT NULL AUTO_INCREMENT,
+--   `user_email` varchar(45) DEFAULT NULL,
+--   PRIMARY KEY (`id`)
+-- ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=latin1;
+-- /*!40101 SET character_set_client = @saved_cs_client */;
+
+
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `order_history` (
+CREATE TABLE `orders` (
   `id` BIGINT(20) NOT NULL AUTO_INCREMENT,
   `user_email` varchar(45) DEFAULT NULL,
-  `order_id` BIGINT(20) DEFAULT NULL,
+  `date` datetime(6) DEFAULT NULL,
+  `order_price` DECIMAL(10, 2) DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=latin1;
-/*!40101 SET character_set_client = @saved_cs_client */;
+
+
+CREATE TABLE `order_items` (
+  `id` BIGINT(20) NOT NULL AUTO_INCREMENT,
+  `order_id` BIGINT(20) NOT NULL,
+  `item_id` BIGINT(20) NOT NULL,
+  `quantity` int(11) NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `fk_order` (`order_id`),
+  KEY `fk_item` (`item_id`),
+  CONSTRAINT `fk_order` FOREIGN KEY (`order_id`) REFERENCES `orders` (`id`) ON DELETE CASCADE,
+  CONSTRAINT `fk_item` FOREIGN KEY (`item_id`) REFERENCES `item` (`id`) ON DELETE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=latin1;
 
 
 DROP TABLE IF EXISTS `review`;

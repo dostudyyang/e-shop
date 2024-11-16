@@ -1,7 +1,6 @@
 package com.yang2.e_shop_master.service;
 
 import com.yang2.e_shop_master.dao.UserRepository;
-import com.yang2.e_shop_master.entity.Address;
 import com.yang2.e_shop_master.entity.User;
 import com.yang2.e_shop_master.requestmodels.UserRequest;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,6 +34,16 @@ public class UserService {
         user.setUserEmail(userRequest.getUserEmail());
         user.setFirstName(userRequest.getFirstName());
         user.setLastName(userRequest.getLastName());
+
+        if (userRequest.getPhone() != null && !userRequest.getPhone().isEmpty()) {
+            user.setPhone(userRequest.getPhone());
+        }
+        if (userRequest.getAddress() != null) {
+            user.setAddressId(userRequest.getAddress().getId());
+        }
+        if (userRequest.getCreditCardNum() != null && !userRequest.getCreditCardNum().isEmpty()) {
+            user.setCreditCardNum(userRequest.getCreditCardNum());
+        }
 
         userRepository.save(user);
     }
@@ -75,6 +84,10 @@ public class UserService {
         user.get().setCreditCardNum(userRequest.getCreditCardNum());
 
         userRepository.save(user.get());
+    }
+
+    public Optional<User> findByUserId(Long userId) {
+        return userRepository.findById(userId);
     }
 
 

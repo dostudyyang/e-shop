@@ -1,10 +1,15 @@
 package com.yang2.e_shop_master.entity;
 import javax.persistence.*;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
+
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @Table(name = "item")
 @Data
+@EqualsAndHashCode(exclude = "orderItems")
 public class Item {
 
     @Id
@@ -32,4 +37,12 @@ public class Item {
 
     @Column(name = "img")
     private String img;
+
+    @OneToMany(mappedBy = "item")
+    private Set<OrderItems> orderItems  = new HashSet<>();
+
+    public void addOrderItem(OrderItems orderItem) {
+        orderItems.add(orderItem);
+        orderItem.setItem(this);
+    }
 }

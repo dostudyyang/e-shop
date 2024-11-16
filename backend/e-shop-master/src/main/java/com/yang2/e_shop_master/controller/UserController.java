@@ -25,29 +25,17 @@ public class UserController {
     /**
      *
      * @param userId
-     * @param userRequest userEmail, firstName, LastName,
-     *                    phone, address(street, province, country, zip), creditCardNum
+     * @param userRequest (Optional) userEmail, firstName, LastName
+     *                    (Mandatory) phone, address(street, province, country, zip), creditCardNum
      * @throws Exception
      */
     @PutMapping("/update/user")
     public void updateUserInfo(
             @RequestParam Long userId, @RequestBody UserRequest userRequest) throws Exception {
 
-        Address currentAddress = addressService.findAddressByZip(userRequest.getAddress().getZip());
-
-        if (currentAddress == null) {
-            Address addressWithoutId = userRequest.getAddress();
-
-            AddressRequest addressRequest = new AddressRequest();
-            addressRequest.setStreet(addressWithoutId.getStreet());
-            addressRequest.setProvince(addressWithoutId.getProvince());
-            addressRequest.setCountry(addressWithoutId.getCountry());
-            addressRequest.setZip(addressWithoutId.getZip());
-
-            Address addressWithId = addressService.addAddress(addressRequest);
-            userRequest.setAddress(addressWithId);
-        }else {
-            userRequest.setAddress(currentAddress);
+        if (userRequest.getAddress() != null) {
+            Address resolvedAddress = addressService.resolveAddress(userRequest.getAddress());
+            userRequest.setAddress(resolvedAddress);
         }
 
         userService.updateUserInfo(userId, userRequest);
@@ -55,7 +43,7 @@ public class UserController {
 
     /**
      *
-     * @param userRequest userEmail, password
+     * @param userRequest password, userEmail
      * @return
      */
     @PostMapping("/login")
@@ -66,10 +54,17 @@ public class UserController {
 
     /**
      *
-     * @param userRequest role, password, userEmail, firstName, lastName
+     * @param userRequest (Mandatory) role, password, userEmail, firstName, lastName
+     *                    (Optional) phone, address(street, province, country, zip), creditCardNum
      */
     @PostMapping("/add/user")
     public void postUser(@RequestBody UserRequest userRequest){
+
+        if (userRequest.getAddress() != null) {
+            Address resolvedAddress = addressService.resolveAddress(userRequest.getAddress());
+            userRequest.setAddress(resolvedAddress);
+        }
+
         userService.postUser(userRequest);
     }
 }
