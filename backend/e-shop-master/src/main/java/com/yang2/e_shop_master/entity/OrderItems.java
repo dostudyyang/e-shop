@@ -1,5 +1,6 @@
 package com.yang2.e_shop_master.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 

@@ -6,5 +6,7 @@ import java.util.Map;
 
 @Data
 public class OrderRequest {
+
     private Map<Long, Integer> itemQuantities;
+
 }

@@ -1,8 +1,11 @@
 package com.yang2.e_shop_master.service;
 
+import com.yang2.e_shop_master.dao.AddressRepository;
 import com.yang2.e_shop_master.dao.UserRepository;
+import com.yang2.e_shop_master.entity.Address;
 import com.yang2.e_shop_master.entity.User;
 import com.yang2.e_shop_master.requestmodels.UserRequest;
+import com.yang2.e_shop_master.responsemodels.UserResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -15,12 +18,15 @@ import java.util.Optional;
 public class UserService {
 
     private UserRepository userRepository;
+    private AddressRepository addressRepository;
     private final PasswordEncoder passwordEncoder;
 
     @Autowired
-    public UserService(UserRepository userRepository, PasswordEncoder passwordEncoder) {
+    public UserService(UserRepository userRepository, PasswordEncoder passwordEncoder,
+                       AddressRepository addressRepository) {
         this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
+        this.addressRepository = addressRepository;
     }
 
     public void postUser(UserRequest userRequest) {
@@ -90,7 +96,27 @@ public class UserService {
         return userRepository.findById(userId);
     }
 
+    public UserResponse loadUserInfo(Long userId) throws Exception {
 
+        UserResponse userResponse = new UserResponse();
+
+        Optional<User> user = userRepository.findById(userId);
+        if (!user.isPresent()) {
+            throw new Exception("User not found");
+        }
+
+        Optional<Address> address = addressRepository.findById(user.get().getAddressId());
+
+        userResponse.setUserEmail(user.get().getUserEmail());
+        userResponse.setFirstName(user.get().getFirstName());
+        userResponse.setLastName(user.get().getLastName());
+        userResponse.setPhone(user.get().getPhone());
+        userResponse.setAddress(address.get());
+        userResponse.setCreditCardNum(user.get().getCreditCardNum());
+
+        return userResponse;
+
+    }
 
 
 }

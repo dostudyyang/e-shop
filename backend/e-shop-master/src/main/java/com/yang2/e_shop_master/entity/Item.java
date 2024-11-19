@@ -1,5 +1,6 @@
 package com.yang2.e_shop_master.entity;
 import javax.persistence.*;
+
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
