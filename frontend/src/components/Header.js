@@ -4,12 +4,13 @@ import Form from "react-bootstrap/Form";
 import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
 import NavDropdown from "react-bootstrap/NavDropdown";
+import { LinkContainer } from "react-router-bootstrap";
 
 function NavScrollExample() {
   return (
     <Navbar expand="lg" className="bg-body-tertiary">
       <Container fluid>
-        <Navbar.Brand href="#">E-SHOP</Navbar.Brand>
+        <Navbar.Brand href="/">E-SHOP</Navbar.Brand>
         <Navbar.Toggle aria-controls="navbarScroll" />
         <Navbar.Collapse id="navbarScroll">
           <Nav
@@ -17,10 +18,10 @@ function NavScrollExample() {
             style={{ maxHeight: "100px" }}
             navbarScroll
           >
-            <Nav.Link href="#action1">
+            <Nav.Link href="/cart">
               <i class="fa-solid fa-cart-shopping">cart</i>
             </Nav.Link>
-            <Nav.Link href="#action2">
+            <Nav.Link href="/login">
               <i class="fa-solid fa-user">login</i>
             </Nav.Link>
           </Nav>
