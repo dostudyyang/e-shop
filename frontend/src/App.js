@@ -10,6 +10,7 @@ import LoginScreen from "./screens/LoginScreen";
 import RegisterScreen from "./screens/RegisterScreen";
 import PaymentScreen from "./screens/PaymentScreen";
 import AdminUserAccount from "./screens/AdminUserAccount";
+import AdminScreen from "./screens/AdminScreen";
 
 function App() {
   return (
@@ -26,6 +27,7 @@ function App() {
               <Route path="/register" Component={RegisterScreen} />
               <Route path="/payment" Component={PaymentScreen} />
               <Route path="/admin/users" Component={AdminUserAccount} />
+              <Route path="/admin" Component={AdminScreen} />
             </Routes>
           </Router>
         </Container>

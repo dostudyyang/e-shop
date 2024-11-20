@@ -12,6 +12,9 @@ function RegisterScreen() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
+  const [creditCard, setCreditCard] = useState("");
+  const [address, setAddress] = useState("");
+  const [phone, setPhone] = useState("");
   const [message, setMessage] = useState("");
 
   const dispatch = useDispatch();
@@ -35,7 +38,7 @@ function RegisterScreen() {
     if (password !== confirmPassword) {
       setMessage("Passwords do not match");
     } else {
-      dispatch(register(name, email, password));
+      dispatch(register(name, email, password, creditCard, address, phone));
     }
   };
 
@@ -54,7 +57,7 @@ function RegisterScreen() {
             placeholder="Enter name"
             value={name}
             onChange={(e) => setName(e.target.value)}
-          ></Form.Control>
+          />
         </Form.Group>
 
         <Form.Group controlId="email">
@@ -65,7 +68,7 @@ function RegisterScreen() {
             placeholder="Enter Email"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
-          ></Form.Control>
+          />
         </Form.Group>
 
         <Form.Group controlId="password">
@@ -76,7 +79,7 @@ function RegisterScreen() {
             placeholder="Enter Password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
-          ></Form.Control>
+          />
         </Form.Group>
 
         <Form.Group controlId="passwordConfirm">
@@ -87,7 +90,40 @@ function RegisterScreen() {
             placeholder="Confirm Password"
             value={confirmPassword}
             onChange={(e) => setConfirmPassword(e.target.value)}
-          ></Form.Control>
+          />
+        </Form.Group>
+
+        <Form.Group controlId="creditCard">
+          <Form.Label>Credit Card Number</Form.Label>
+          <Form.Control
+            required
+            type="text"
+            placeholder="Enter Credit Card Number"
+            value={creditCard}
+            onChange={(e) => setCreditCard(e.target.value)}
+          />
+        </Form.Group>
+
+        <Form.Group controlId="address">
+          <Form.Label>Shipping Address</Form.Label>
+          <Form.Control
+            required
+            type="text"
+            placeholder="Enter Shipping Address"
+            value={address}
+            onChange={(e) => setAddress(e.target.value)}
+          />
+        </Form.Group>
+
+        <Form.Group controlId="phone">
+          <Form.Label>Phone Number</Form.Label>
+          <Form.Control
+            required
+            type="tel"
+            placeholder="Enter Phone Number"
+            value={phone}
+            onChange={(e) => setPhone(e.target.value)}
+          />
         </Form.Group>
 
         <Button type="submit" variant="primary">

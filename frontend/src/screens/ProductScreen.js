@@ -105,9 +105,11 @@ function ProductScreen() {
                   </ListGroup.Item>
                   <ListGroup.Item>
                     <Row>
-                      <Col>Status:</Col>
+                      <Col>Quantity Remaining:</Col>
                       <Col>
-                        {product.countInStock > 0 ? "In Stock" : "Out of Stock"}
+                        {product.quantity > 0
+                          ? product.quantity + " in Stock"
+                          : "Out of Stock"}
                       </Col>
                     </Row>
                   </ListGroup.Item>

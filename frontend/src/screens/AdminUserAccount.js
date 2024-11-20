@@ -54,7 +54,8 @@ function AdminUserAccount() {
               <th>EMAIL</th>
               <th>ROLE</th>
               <th>PHONE</th>
-              <th>ADDRESS ID</th>
+              <th>ADDRESS</th>
+              <th>CREDIT CARD</th>
               <th>ACTIONS</th>
             </tr>
           </thead>
@@ -67,6 +68,7 @@ function AdminUserAccount() {
                 <td>{user.role}</td>
                 <td>{user.phone}</td>
                 <td>{user.addressId}</td>
+                <td>{user.creditCardNum}</td>
                 <td>
                   <LinkContainer
                     to={`/admin/user/${user._links.self.href

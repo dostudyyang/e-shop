@@ -13,7 +13,9 @@ function Product({ product }) {
       <Card.Body>
         <Link to={`/product/${product.id}`}>
           <Card.Title as="div">
-            <strong style={{ fontSize: "20px" }}>{product.name}</strong>
+            <strong style={{ fontSize: "20px" }}>
+              {product.brand} {product.name}
+            </strong>
           </Card.Title>
         </Link>
 
