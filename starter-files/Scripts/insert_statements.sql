@@ -1,34 +1,36 @@
-INSERT INTO item (category, brand, name, description, quantity, price) VALUES ('Apparel', 'Nike', 'Running Shoes', 'High-quality running shoes designed for comfort and durability.', 50, 100);
-INSERT INTO item (category, brand, name, description, quantity, price) VALUES ('Apparel', 'Nike', 'Basketball Shoes', 'Shoes tailored for basketball players, providing excellent support.', 50, 120);
-INSERT INTO item (category, brand, name, description, quantity, price) VALUES ('Apparel', 'Nike', 'Sports Jacket', 'Lightweight sports jacket for outdoor activities.', 50, 75);
-INSERT INTO item (category, brand, name, description, quantity, price) VALUES ('Apparel', 'Nike', 'Sports Shorts', 'Breathable shorts perfect for sports and exercise.', 50, 40);
-INSERT INTO item (category, brand, name, description, quantity, price) VALUES ('Apparel', 'H&M', 'Blouse', 'Casual blouse suitable for everyday wear.', 50, 30);
-INSERT INTO item (category, brand, name, description, quantity, price) VALUES ('Apparel', 'H&M', 'Jacket', 'Warm jacket made from premium materials.', 50, 80);
-INSERT INTO item (category, brand, name, description, quantity, price) VALUES ('Apparel', 'H&M', 'Sunglasses', 'Stylish sunglasses offering UV protection.', 50, 50);
-INSERT INTO item (category, brand, name, description, quantity, price) VALUES ('Apparel', 'Uniqlo', 'Sweater', 'Soft and comfortable sweater for cooler weather.', 50, 60);
-INSERT INTO item (category, brand, name, description, quantity, price) VALUES ('Apparel', 'Uniqlo', 'Scarf', 'Fashionable scarf for added style and warmth.', 50, 20);
-INSERT INTO item (category, brand, name, description, quantity, price) VALUES ('Apparel', 'Uniqlo', 'Bag', 'Durable and spacious bag for daily use.', 50, 45);
-INSERT INTO item (category, brand, name, description, quantity, price) VALUES ('Apparel', 'Adidas', 'T-Shirt', 'Basic T-Shirt, versatile for any outfit.', 50, 25);
-INSERT INTO item (category, brand, name, description, quantity, price) VALUES ('Apparel', 'Adidas', 'Shoes', 'Comfortable and stylish shoes.', 50, 90);
-INSERT INTO item (category, brand, name, description, quantity, price) VALUES ('Apparel', 'Adidas', 'Track Pants', 'Flexible track pants for sports and leisure.', 50, 50);
-INSERT INTO item (category, brand, name, description, quantity, price) VALUES ('Electronics', 'Apple', 'Headphones', 'High-quality headphones with excellent sound quality.', 50, 150);
-INSERT INTO item (category, brand, name, description, quantity, price) VALUES ('Electronics', 'Apple', 'iPhone', 'Latest model of Apple''s flagship smartphone.', 50, 999);
-INSERT INTO item (category, brand, name, description, quantity, price) VALUES ('Electronics', 'Apple', 'MacBook', 'Apple''s premium laptop with top-notch performance.', 50, 1299);
-INSERT INTO item (category, brand, name, description, quantity, price) VALUES ('Electronics', 'Huawei', 'Laptop', 'High-performance laptop suitable for work and gaming.', 50, 700);
-INSERT INTO item (category, brand, name, description, quantity, price) VALUES ('Electronics', 'Huawei', 'Tablet', 'Portable tablet with a wide range of applications.', 50, 400);
-INSERT INTO item (category, brand, name, description, quantity, price) VALUES ('Electronics', 'Samsung', 'Galaxy Phone', 'Samsung''s flagship smartphone model.', 50, 950);
-INSERT INTO item (category, brand, name, description, quantity, price) VALUES ('Electronics', 'Samsung', 'Galaxy Tab', 'Versatile tablet by Samsung for entertainment and work.', 50, 450);
-INSERT INTO item (category, brand, name, description, quantity, price) VALUES ('Electronics', 'Samsung', 'Smartwatch', 'Advanced smartwatch with health tracking features.', 50, 250);
-INSERT INTO item (category, brand, name, description, quantity, price) VALUES ('Electronics', 'Sony', 'Camera', 'Professional camera with high resolution and optical zoom.', 50, 500);
-INSERT INTO item (category, brand, name, description, quantity, price) VALUES ('Electronics', 'Sony', 'Smart TV', 'Smart TV with 4K resolution and internet connectivity.', 50, 800);
-INSERT INTO item (category, brand, name, description, quantity, price) VALUES ('Electronics', 'Sony', 'Sound System', 'Premium sound system for immersive audio experience.', 50, 350);
-INSERT INTO item (category, brand, name, description, quantity, price) VALUES ('Electronics', 'Sony', 'Soundbar', 'Compact soundbar with powerful sound output.', 50, 200);
-INSERT INTO item (category, brand, name, description, quantity, price) VALUES ('Outdoor Adventure', 'Columbia', 'Sleeping Bag', 'Comfortable sleeping bag for camping trips.', 50, 80);
-INSERT INTO item (category, brand, name, description, quantity, price) VALUES ('Outdoor Adventure', 'Columbia', 'Hiking Boots', 'Sturdy boots designed for hiking on rough terrain.', 50, 110);
-INSERT INTO item (category, brand, name, description, quantity, price) VALUES ('Outdoor Adventure', 'Columbia', 'Camping Chair', 'Portable and foldable camping chair.', 50, 40);
-INSERT INTO item (category, brand, name, description, quantity, price) VALUES ('Outdoor Adventure', 'Patagonia', 'Lantern', 'Bright LED lantern for outdoor use.', 50, 25);
-INSERT INTO item (category, brand, name, description, quantity, price) VALUES ('Outdoor Adventure', 'Patagonia', 'Portable Grill', 'Compact grill perfect for camping and picnics.', 50, 100);
-INSERT INTO item (category, brand, name, description, quantity, price) VALUES ('Outdoor Adventure', 'Patagonia', 'Water Bottle', 'Durable water bottle for hydration on the go.', 50, 15);
-INSERT INTO item (category, brand, name, description, quantity, price) VALUES ('Outdoor Adventure', 'The North Face', 'Tent', 'Spacious tent suitable for camping trips.', 50, 120);
-INSERT INTO item (category, brand, name, description, quantity, price) VALUES ('Outdoor Adventure', 'The North Face', 'Backpack', 'Durable backpack with ample storage space.', 50, 60);
-INSERT INTO item (category, brand, name, description, quantity, price) VALUES ('Outdoor Adventure', 'The North Face', 'Camping Stove', 'Portable stove for cooking while camping.', 50, 90);
+
+INSERT INTO item (category, brand, name, description, quantity, price, img) VALUES 
+	('Apparel', 'Nike', 'Running Shoes', 'High-quality running shoes designed for comfort and durability.', 50, 100, 'https://raw.githubusercontent.com/dostudyyang/e-shop/master/e-shop-images/Nike_Running Shoes.jpg'),
+	('Apparel', 'Nike', 'Basketball Shoes', 'Shoes tailored for basketball players, providing excellent support.', 50, 120, 'https://raw.githubusercontent.com/dostudyyang/e-shop/master/e-shop-images/Nike_Basketball Shoes.jpg'),
+	('Apparel', 'Nike', 'Sports Jacket', 'Lightweight sports jacket for outdoor activities.', 50, 75, 'https://raw.githubusercontent.com/dostudyyang/e-shop/master/e-shop-images/Nike_Sports Jacket.jpg'),
+	('Apparel', 'Nike', 'Sports Shorts', 'Breathable shorts perfect for sports and exercise.', 50, 40, 'https://raw.githubusercontent.com/dostudyyang/e-shop/master/e-shop-images/Nike_Sports Shorts.jpg'),
+	('Apparel', 'H&M', 'Blouse', 'Casual blouse suitable for everyday wear.', 50, 30, 'https://raw.githubusercontent.com/dostudyyang/e-shop/master/e-shop-images/H&M_Blouse.jpg'),
+	('Apparel', 'H&M', 'Jacket', 'Warm jacket made from premium materials.', 50, 80, 'https://raw.githubusercontent.com/dostudyyang/e-shop/master/e-shop-images/H&M_Jacket.jpg'),
+    ('Apparel', 'H&M', 'Sunglasses', 'Stylish sunglasses offering UV protection.', 50, 50, 'https://raw.githubusercontent.com/dostudyyang/e-shop/master/e-shop-images/H&M_Sunglasses.jpg'),
+    ('Apparel', 'Uniqlo', 'Sweater', 'Soft and comfortable sweater for cooler weather.', 50, 60, 'https://raw.githubusercontent.com/dostudyyang/e-shop/master/e-shop-images/Uniqlo_Sweater.jpg'),
+    ('Apparel', 'Uniqlo', 'Scarf', 'Fashionable scarf for added style and warmth.', 50, 20, 'https://raw.githubusercontent.com/dostudyyang/e-shop/master/e-shop-images/Uniqlo_Scarf.jpg'),
+    ('Apparel', 'Uniqlo', 'Bag', 'Durable and spacious bag for daily use.', 50, 45, 'https://raw.githubusercontent.com/dostudyyang/e-shop/master/e-shop-images/Uniqlo_Bag.jpg'),
+    ('Apparel', 'Adidas', 'T-Shirt', 'Basic T-Shirt, versatile for any outfit.', 50, 25, 'https://raw.githubusercontent.com/dostudyyang/e-shop/master/e-shop-images/Adidas_T-Shirt.jpg'),
+    ('Apparel', 'Adidas', 'Shoes', 'Comfortable and stylish shoes.', 50, 90, 'https://raw.githubusercontent.com/dostudyyang/e-shop/master/e-shop-images/Adidas_Shoes.jpg'),
+    ('Apparel', 'Adidas', 'Track Pants', 'Flexible track pants for sports and leisure.', 50, 50, 'https://raw.githubusercontent.com/dostudyyang/e-shop/master/e-shop-images/Adidas_Track Pants.jpg'),
+	('Electronics', 'Apple', 'Headphones', 'High-quality headphones with excellent sound quality.', 50, 150, 'https://raw.githubusercontent.com/dostudyyang/e-shop/master/e-shop-images/Apple_Headphones.jpg'),
+	('Electronics', 'Apple', 'iPhone', 'Latest model of Apple''s flagship smartphone.', 50, 999, 'https://raw.githubusercontent.com/dostudyyang/e-shop/master/e-shop-images/Apple_iPhone.jpg'),
+	('Electronics', 'Apple', 'MacBook', 'Apple''s premium laptop with top-notch performance.', 50, 1299, 'https://raw.githubusercontent.com/dostudyyang/e-shop/master/e-shop-images/Apple_MacBook.jpg'),
+	('Electronics', 'Huawei', 'Laptop', 'High-performance laptop suitable for work and gaming.', 50, 700, 'https://raw.githubusercontent.com/dostudyyang/e-shop/master/e-shop-images/Huawei_Laptop.jpg'),
+	('Electronics', 'Huawei', 'Tablet', 'Portable tablet with a wide range of applications.', 50, 400, 'https://raw.githubusercontent.com/dostudyyang/e-shop/master/e-shop-images/Huawei_Tablet.jpg'),
+	('Electronics', 'Samsung', 'Galaxy Phone', 'Samsung''s flagship smartphone model.', 50, 950, 'https://raw.githubusercontent.com/dostudyyang/e-shop/master/e-shop-images/Samsung_Galaxy Phone.jpg'),
+	('Electronics', 'Samsung', 'Galaxy Tab', 'Versatile tablet by Samsung for entertainment and work.', 50, 450, 'https://raw.githubusercontent.com/dostudyyang/e-shop/master/e-shop-images/Samsung_Galaxy Tab.jpg'),
+	('Electronics', 'Samsung', 'Smartwatch', 'Advanced smartwatch with health tracking features.', 50, 250, 'https://raw.githubusercontent.com/dostudyyang/e-shop/master/e-shop-images/Samsung_Smartwatch.jpg'),
+	('Electronics', 'Sony', 'Camera', 'Professional camera with high resolution and optical zoom.', 50, 500, 'https://raw.githubusercontent.com/dostudyyang/e-shop/master/e-shop-images/Sony_Camera.jpg'),
+	('Electronics', 'Sony', 'Smart TV', 'Smart TV with 4K resolution and internet connectivity.', 50, 800, 'https://raw.githubusercontent.com/dostudyyang/e-shop/master/e-shop-images/Sony_Smart TV.jpg'),
+	('Electronics', 'Sony', 'Sound System', 'Premium sound system for immersive audio experience.', 50, 350, 'https://raw.githubusercontent.com/dostudyyang/e-shop/master/e-shop-images/Sony_Sound System.jpg'),
+	('Electronics', 'Sony', 'Soundbar', 'Compact soundbar with powerful sound output.', 50, 200, 'https://raw.githubusercontent.com/dostudyyang/e-shop/master/e-shop-images/Sony_Soundbar.jpg'),
+	('Outdoor Adventure', 'Columbia', 'Sleeping Bag', 'Comfortable sleeping bag for camping trips.', 50, 80, 'https://raw.githubusercontent.com/dostudyyang/e-shop/master/e-shop-images/Columbia_Sleeping Bag.jpg'),
+	('Outdoor Adventure', 'Columbia', 'Hiking Boots', 'Sturdy boots designed for hiking on rough terrain.', 50, 110, 'https://raw.githubusercontent.com/dostudyyang/e-shop/master/e-shop-images/Columbia_Hiking Boots.jpg'),
+	('Outdoor Adventure', 'Columbia', 'Camping Chair', 'Portable and foldable camping chair.', 50, 40, 'https://raw.githubusercontent.com/dostudyyang/e-shop/master/e-shop-images/Columbia_Camping Chair.jpg'),
+	('Outdoor Adventure', 'Patagonia', 'Lantern', 'Bright LED lantern for outdoor use.', 50, 25, 'https://raw.githubusercontent.com/dostudyyang/e-shop/master/e-shop-images/Patagonia_Lantern.jpg'),
+	('Outdoor Adventure', 'Patagonia', 'Portable Grill', 'Compact grill perfect for camping and picnics.', 50, 100, 'https://raw.githubusercontent.com/dostudyyang/e-shop/master/e-shop-images/Patagonia_Portable Grill.jpg'),
+	('Outdoor Adventure', 'Patagonia', 'Water Bottle', 'Durable water bottle for hydration on the go.', 50, 15, 'https://raw.githubusercontent.com/dostudyyang/e-shop/master/e-shop-images/Patagonia_Water Bottle.jpg'),
+	('Outdoor Adventure', 'The North Face', 'Tent', 'Spacious tent suitable for camping trips.', 50, 120, 'https://raw.githubusercontent.com/dostudyyang/e-shop/master/e-shop-images/The North Face_Tent.jpg'),
+	('Outdoor Adventure', 'The North Face', 'Backpack', 'Durable backpack with ample storage space.', 50, 60, 'https://raw.githubusercontent.com/dostudyyang/e-shop/master/e-shop-imagesThe North Face_Backpack.jpg'),
+	('Outdoor Adventure', 'The North Face', 'Camping Stove', 'Portable stove for cooking while camping.', 50, 90, 'https://raw.githubusercontent.com/dostudyyang/e-shop/master/e-shop-images/The North Face_Camping Stove.jpg');

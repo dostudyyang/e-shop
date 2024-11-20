@@ -7,12 +7,14 @@ import com.yang2.e_shop_master.responsemodels.OrderItemResponse;
 import com.yang2.e_shop_master.responsemodels.OrderResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
-import org.springframework.security.core.parameters.P;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.bind.annotation.RequestParam;
 
-import java.sql.Date;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.time.LocalDate;
 import java.util.*;
 
@@ -25,16 +27,19 @@ public class OrderService {
     private OrderRepository orderRepository;
 
     private AddressRepository addressRepository;
+    private UserRepository userRepository;
 
     @Autowired
     public OrderService(ItemRepository itemRepository,
                         OrderItemsRepository orderItemsRepository,
                         OrderRepository orderRepository,
-                        AddressRepository addressRepository) {
+                        AddressRepository addressRepository,
+                        UserRepository userRepository) {
         this.itemRepository = itemRepository;
         this.orderItemsRepository = orderItemsRepository;
         this.orderRepository = orderRepository;
         this.addressRepository = addressRepository;
+        this.userRepository = userRepository;
     }
 
     // 只需要调用 set 方法设置 @ManyToOne 的属性后，Spring Data JPA 会自动维护 @OneToMany 的反向关系
@@ -44,7 +49,8 @@ public class OrderService {
 
         Order order = new Order();
         order.setUserEmail(userEmail);
-        order.setDate(Date.valueOf(LocalDate.now()));
+
+        order.setDate(new Date());
 
         double orderPrice = 0.00;
 
@@ -130,7 +136,9 @@ public class OrderService {
             OrderItemResponse orderItemResponse = new OrderItemResponse();
             orderItemResponse.setItemId(item.getId());
             orderItemResponse.setItemName(item.getName());
+            orderItemResponse.setBrand(item.getBrand());
             orderItemResponse.setItemPrice(item.getPrice());
+            orderItemResponse.setImg(item.getImg());
 
             orderItemResponse.setOrderQuantity(orderItems.getQuantity());
 
@@ -142,9 +150,78 @@ public class OrderService {
         return orderResponse;
     }
 
-    Page<Order> findByUserEmail(String userEmail, Pageable pageable){
+    public OrderResponse orderDetails(Long orderId){
+
+        OrderResponse orderResponse = new OrderResponse();
+
+        Optional<Order> orderOptional = orderRepository.findById(orderId);
+        Order order = orderOptional.get();
+
+        User orderUser = userRepository.findUserByUserEmail(order.getUserEmail());
+
+        orderResponse.setUserEmail(orderUser.getUserEmail());
+        orderResponse.setUserFullName(orderUser.getFirstName() + " "+ orderUser.getLastName());
+        orderResponse.setPhone(orderUser.getPhone());
+
+        Optional<Address> address = addressRepository.findById(orderUser.getAddressId());
+        orderResponse.setAddress(address.get());
+
+        orderResponse.setOrderPrice(order.getOrderPrice());
+        orderResponse.setDate(order.getDate());
+
+        // Ordered Items
+        List<OrderItems> orderItemsList = orderItemsRepository.findByOrder(order);
+        List<OrderItemResponse> orderItemResponseList = new ArrayList<>();
+
+        for (OrderItems orderItems : orderItemsList) {
+            Item item = orderItems.getItem();
+
+            OrderItemResponse orderItemResponse = new OrderItemResponse();
+            orderItemResponse.setItemId(item.getId());
+            orderItemResponse.setItemName(item.getName());
+            orderItemResponse.setBrand(item.getBrand());
+            orderItemResponse.setItemPrice(item.getPrice());
+            orderItemResponse.setImg(item.getImg());
+
+            orderItemResponse.setOrderQuantity(orderItems.getQuantity());
+
+            orderItemResponseList.add(orderItemResponse);
+        }
+
+        orderResponse.setOrderItemResponseList(orderItemResponseList);
+
+        return orderResponse;
+    }
+
+    public Page<Order> findByUserEmail(String userEmail, Pageable pageable){
         return orderRepository.findByUserEmail(userEmail, pageable);
     }
+
+    public Page<Order> findByItemId(Long itemId, Pageable pageable) throws Exception {
+        Optional<Item> item = itemRepository.findById(itemId);
+
+        if (!item.isPresent()){
+            throw new Exception("Item is not exist!");
+        }
+
+        List<OrderItems> orderItemsList = orderItemsRepository.findByItem(item.get());
+        List<Long> orderIds = new ArrayList<>();
+
+        for (OrderItems orderItem : orderItemsList) {
+            Long orderId = orderItem.getOrder().getId();
+            orderIds.add(orderId);
+
+        }
+
+        return orderRepository.findByIdIn(orderIds, pageable);
+
+    }
+
+    public Page<Order> findByDate(Date date, Pageable pageable){
+        return orderRepository.findByDate(date, pageable);
+    }
+
+
 }
 
 

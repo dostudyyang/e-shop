@@ -7,7 +7,9 @@ public class OrderItemResponse {
 
     private Long itemId;
     private String itemName;
+    private String brand;
     private Integer itemPrice;
+    private String img;
 
     private Integer orderQuantity;
 }
