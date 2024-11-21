@@ -67,7 +67,7 @@ public class OrderController {
         return orderService.orderDetails(orderId);
     }
 
-    @GetMapping("/search/findByUserEmail")
+    @GetMapping("/find/findByUserEmail")
     public Page<Order> findByUserEmail(@RequestParam(value = "userEmail") String userEmail,
                                        @RequestParam(value = "page", required = false, defaultValue = "0") int page,
                                        @RequestParam(value = "size", required = false, defaultValue = "5") int size){
@@ -82,7 +82,7 @@ public class OrderController {
      * @param size
      * @return
      */
-    @GetMapping("/search/findByDate")
+    @GetMapping("/find/findByDate")
     public Page<Order> findByDate(@RequestParam(value = "date") String stringDate,
                                   @RequestParam(value = "page", required = false, defaultValue = "0") int page,
                                   @RequestParam(value = "size", required = false, defaultValue = "5") int size) throws ParseException {
@@ -93,7 +93,7 @@ public class OrderController {
         return orderService.findByDate(date, pageable);
     }
 
-    @GetMapping("/search/findByItemId")
+    @GetMapping("/find/findByItemId")
     public Page<Order> findByItemId(@RequestParam(value = "itemId") Long itemId,
                                     @RequestParam(value = "page", required = false, defaultValue = "0") int page,
                                     @RequestParam(value = "size", required = false, defaultValue = "5") int size) throws Exception {
