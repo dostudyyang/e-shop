@@ -2,7 +2,6 @@ package com.yang2.e_shop_master.entity;
 import javax.persistence.*;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import org.hibernate.annotations.CreationTimestamp;
@@ -35,6 +34,7 @@ public class Order {
     @OneToMany(mappedBy = "order",
             cascade = {CascadeType.PERSIST, CascadeType.MERGE,
                     CascadeType.DETACH, CascadeType.REFRESH}, orphanRemoval = false)
+    @JsonIgnore
     private Set<OrderItems> orderItems = new HashSet<>();
 
 

@@ -1,6 +1,7 @@
 package com.yang2.e_shop_master.entity;
 import javax.persistence.*;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
@@ -40,6 +41,7 @@ public class Item {
     private String img;
 
     @OneToMany(mappedBy = "item")
+    @JsonIgnore
     private Set<OrderItems> orderItems  = new HashSet<>();
 
     public void addOrderItem(OrderItems orderItem) {

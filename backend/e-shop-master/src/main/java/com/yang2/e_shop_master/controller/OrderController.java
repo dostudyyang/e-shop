@@ -7,8 +7,15 @@ import com.yang2.e_shop_master.responsemodels.OrderResponse;
 import com.yang2.e_shop_master.service.OrderService;
 import com.yang2.e_shop_master.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.bind.annotation.*;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.Map;
 import java.util.Optional;
 
@@ -52,6 +59,46 @@ public class OrderController {
         }
 
         return orderService.latestOrderSummary(user.get());
+    }
+
+    @GetMapping("/orderDetails")
+    public OrderResponse orderDetails(@RequestParam Long orderId){
+
+        return orderService.orderDetails(orderId);
+    }
+
+    @GetMapping("/find/findByUserEmail")
+    public Page<Order> findByUserEmail(@RequestParam(value = "userEmail") String userEmail,
+                                       @RequestParam(value = "page", required = false, defaultValue = "0") int page,
+                                       @RequestParam(value = "size", required = false, defaultValue = "5") int size){
+        Pageable pageable = PageRequest.of(page, size);
+        return orderService.findByUserEmail(userEmail, pageable);
+    }
+
+    /**
+     *  e.g. --> ?date=2024-11-15
+     * @param stringDate
+     * @param page
+     * @param size
+     * @return
+     */
+    @GetMapping("/find/findByDate")
+    public Page<Order> findByDate(@RequestParam(value = "date") String stringDate,
+                                  @RequestParam(value = "page", required = false, defaultValue = "0") int page,
+                                  @RequestParam(value = "size", required = false, defaultValue = "5") int size) throws ParseException {
+
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        Date date = dateFormat.parse(stringDate);
+        Pageable pageable = PageRequest.of(page, size);
+        return orderService.findByDate(date, pageable);
+    }
+
+    @GetMapping("/find/findByItemId")
+    public Page<Order> findByItemId(@RequestParam(value = "itemId") Long itemId,
+                                    @RequestParam(value = "page", required = false, defaultValue = "0") int page,
+                                    @RequestParam(value = "size", required = false, defaultValue = "5") int size) throws Exception {
+        Pageable pageable = PageRequest.of(page, size);
+        return orderService.findByItemId(itemId, pageable);
     }
 
 

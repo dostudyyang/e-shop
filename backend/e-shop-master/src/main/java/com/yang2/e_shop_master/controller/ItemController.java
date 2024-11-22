@@ -31,7 +31,7 @@ public class ItemController {
      * @param size
      * @return
      */
-    @GetMapping("/search/findByName")
+    @GetMapping("/find/findByName")
     public Page<Item> findByName(
             @RequestParam(value = "name") String name,
             @RequestParam(value = "sortBy", required = false) String sortBy,
@@ -54,7 +54,7 @@ public class ItemController {
      * @param size
      * @return
      */
-    @GetMapping("/search/findByCategory")
+    @GetMapping("/find/findByCategory")
     public Page<Item> findByCategory(
             @RequestParam(value = "category") String category,
             @RequestParam(value = "sortBy", required = false) String sortBy,
@@ -76,7 +76,7 @@ public class ItemController {
      * @param size
      * @return
      */
-    @GetMapping("/search/findByBrand")
+    @GetMapping("/find/findByBrand")
     public Page<Item> findByBrand(
             @RequestParam(value = "brand") String brand,
             @RequestParam(value = "sortBy", required = false) String sortBy,

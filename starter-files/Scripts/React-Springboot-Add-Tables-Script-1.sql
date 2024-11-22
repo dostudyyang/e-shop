@@ -53,7 +53,7 @@ CREATE TABLE `item` (
   `brand` varchar(45) DEFAULT NULL,
   `quantity` int(11) DEFAULT NULL,
   `price` int(11) DEFAULT NULL,
-  `img` MEDIUMBLOB  DEFAULT NULL,
+  `img` varchar(255)  DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
