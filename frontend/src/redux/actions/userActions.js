@@ -42,7 +42,7 @@ export const login = (email, password) => async (dispatch) => {
     };
 
     const { data } = await axios.post(
-      "/api/users/login/",
+      "http://localhost:8080/api/login/",
       { username: email, password: password },
       config
     );
@@ -112,24 +112,14 @@ export const register = (name, email, password) => async (dispatch) => {
   }
 };
 
-export const getUserDetails = (id) => async (dispatch, getState) => {
+// without authorization
+export const getUserDetails = (id) => async (dispatch) => {
   try {
     dispatch({
       type: USER_DETAILS_REQUEST,
     });
 
-    const {
-      userLogin: { userInfo },
-    } = getState();
-
-    const config = {
-      headers: {
-        "Content-type": "application/json",
-        Authorization: `Bearer ${userInfo.token}`,
-      },
-    };
-
-    const { data } = await axios.get(`/api/users/${id}/`, config);
+    const { data } = await axios.get(`http://localhost:8080/api/users/${id}`);
 
     dispatch({
       type: USER_DETAILS_SUCCESS,
@@ -145,6 +135,43 @@ export const getUserDetails = (id) => async (dispatch, getState) => {
     });
   }
 };
+
+// export const getUserDetails = (id) => async (dispatch, getState) => {
+//   try {
+//     dispatch({
+//       type: USER_DETAILS_REQUEST,
+//     });
+
+//     const {
+//       userLogin: { userInfo },
+//     } = getState();
+
+//     const config = {
+//       headers: {
+//         "Content-type": "application/json",
+//         Authorization: `Bearer ${userInfo.token}`,
+//       },
+//     };
+
+//     const { data } = await axios.get(
+//       `http://localhost:8080/api/users/${id}`,
+//       config
+//     );
+
+//     dispatch({
+//       type: USER_DETAILS_SUCCESS,
+//       payload: data,
+//     });
+//   } catch (error) {
+//     dispatch({
+//       type: USER_DETAILS_FAIL,
+//       payload:
+//         error.response && error.response.data.detail
+//           ? error.response.data.detail
+//           : error.message,
+//     });
+//   }
+// };
 
 export const updateUserProfile = (user) => async (dispatch, getState) => {
   try {
@@ -164,7 +191,7 @@ export const updateUserProfile = (user) => async (dispatch, getState) => {
     };
 
     const { data } = await axios.put(
-      `/api/users/profile/update/`,
+      `http://localhost:8080/api/update/user`,
       user,
       config
     );
@@ -280,27 +307,15 @@ export const deleteUser = (id) => async (dispatch, getState) => {
   }
 };
 
-export const updateUser = (user) => async (dispatch, getState) => {
+export const updateUser = (user) => async (dispatch) => {
   try {
     dispatch({
       type: USER_UPDATE_REQUEST,
     });
 
-    const {
-      userLogin: { userInfo },
-    } = getState();
-
-    const config = {
-      headers: {
-        "Content-type": "application/json",
-        Authorization: `Bearer ${userInfo.token}`,
-      },
-    };
-
     const { data } = await axios.put(
-      `/api/users/update/${user._id}/`,
-      user,
-      config
+      `http://localhost:8080/api/update/user`,
+      user
     );
 
     dispatch({
@@ -321,3 +336,44 @@ export const updateUser = (user) => async (dispatch, getState) => {
     });
   }
 };
+// export const updateUser = (user) => async (dispatch, getState) => {
+//   try {
+//     dispatch({
+//       type: USER_UPDATE_REQUEST,
+//     });
+
+//     const {
+//       userLogin: { userInfo },
+//     } = getState();
+
+//     const config = {
+//       headers: {
+//         "Content-type": "application/json",
+//         Authorization: `Bearer ${userInfo.token}`,
+//       },
+//     };
+
+//     const { data } = await axios.put(
+//       `/api/users/update/${user._id}/`,
+//       user,
+//       config
+//     );
+
+//     dispatch({
+//       type: USER_UPDATE_SUCCESS,
+//     });
+
+//     dispatch({
+//       type: USER_DETAILS_SUCCESS,
+//       payload: data,
+//     });
+//   } catch (error) {
+//     dispatch({
+//       type: USER_UPDATE_FAIL,
+//       payload:
+//         error.response && error.response.data.detail
+//           ? error.response.data.detail
+//           : error.message,
+//     });
+//   }
+// };

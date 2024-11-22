@@ -20,7 +20,7 @@ function LoginScreen({ location, history }) {
 
   useEffect(() => {
     if (userInfo) {
-      history.push();
+      history.push("/");
     }
   }, [history, userInfo]);
 
