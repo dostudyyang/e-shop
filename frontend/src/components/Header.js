@@ -22,7 +22,10 @@ function NavScrollExample() {
               <i class="fa-solid fa-cart-shopping">cart</i>
             </Nav.Link>
             <Nav.Link href="/login">
-              <i class="fa-solid fa-user">login</i>
+              <i class="fa-solid fa-right-to-bracket">login</i>
+            </Nav.Link>
+            <Nav.Link href="/userProfile">
+              <i class="fa-solid fa-user">USER</i>
             </Nav.Link>
           </Nav>
           <Form className="d-flex">

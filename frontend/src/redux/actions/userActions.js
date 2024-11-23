@@ -42,8 +42,8 @@ export const login = (email, password) => async (dispatch) => {
     };
 
     const { data } = await axios.post(
-      "http://localhost:8080/api/login/",
-      { username: email, password: password },
+      "http://localhost:8080/api/users/login",
+      { userEmail: email, password: password },
       config
     );
 
@@ -64,6 +64,17 @@ export const login = (email, password) => async (dispatch) => {
   }
 };
 
+export const getUserInfo = (userId) => async (dispatch) => {
+  try {
+    const { data } = await axios.get(
+      `http://localhost:8080/api/users/load/userInfo?userId=${userId}`
+    );
+    return data;
+  } catch (error) {
+    console.error("Error fetching user info:", error);
+  }
+};
+
 export const logout = () => (dispatch) => {
   localStorage.removeItem("userInfo");
   dispatch({ type: USER_LOGOUT });
@@ -72,45 +83,75 @@ export const logout = () => (dispatch) => {
   dispatch({ type: USER_LIST_RESET });
 };
 
-export const register = (name, email, password) => async (dispatch) => {
-  try {
-    dispatch({
-      type: USER_REGISTER_REQUEST,
-    });
+export const register =
+  (
+    role,
+    password,
+    userEmail,
+    firstName,
+    lastName,
+    phone = null,
+    address = null,
+    creditCardNum = null
+  ) =>
+  async (dispatch) => {
+    try {
+      dispatch({
+        type: USER_REGISTER_REQUEST,
+      });
 
-    const config = {
-      headers: {
-        "Content-type": "application/json",
-      },
-    };
+      const config = {
+        headers: {
+          "Content-type": "application/json",
+        },
+      };
 
-    const { data } = await axios.post(
-      "/api/users/register/",
-      { name: name, email: email, password: password },
-      config
-    );
+      // Prepare the payload for the API request
+      const userRequest = {
+        role: role, // Mandatory
+        password: password, // Mandatory
+        userEmail: userEmail, // Mandatory
+        firstName: firstName, // Mandatory
+        lastName: lastName, // Mandatory
+        phone: phone || null, // Optional
+        address: address
+          ? {
+              street: address.street,
+              province: address.province,
+              country: address.country,
+              zip: address.zip,
+            }
+          : null, // Optional (nested object)
+        creditCardNum: creditCardNum || null, // Optional
+      };
 
-    dispatch({
-      type: USER_REGISTER_SUCCESS,
-      payload: data,
-    });
+      const { data } = await axios.post(
+        "http://localhost:8080/api/users/add/user",
+        userRequest,
+        config
+      );
 
-    dispatch({
-      type: USER_LOGIN_SUCCESS,
-      payload: data,
-    });
+      dispatch({
+        type: USER_REGISTER_SUCCESS,
+        payload: data,
+      });
 
-    localStorage.setItem("userInfo", JSON.stringify(data));
-  } catch (error) {
-    dispatch({
-      type: USER_REGISTER_FAIL,
-      payload:
-        error.response && error.response.data.detail
-          ? error.response.data.detail
-          : error.message,
-    });
-  }
-};
+      dispatch({
+        type: USER_LOGIN_SUCCESS,
+        payload: data,
+      });
+
+      localStorage.setItem("userInfo", JSON.stringify(data));
+    } catch (error) {
+      dispatch({
+        type: USER_REGISTER_FAIL,
+        payload:
+          error.response && error.response.data.detail
+            ? error.response.data.detail
+            : error.message,
+      });
+    }
+  };
 
 // without authorization
 export const getUserDetails = (id) => async (dispatch) => {
@@ -313,9 +354,13 @@ export const updateUser = (user) => async (dispatch) => {
       type: USER_UPDATE_REQUEST,
     });
 
+    // Extract userId from the user object
+    const { id, ...userRequest } = user;
+
+    // Make the PUT request with userId as a query parameter
     const { data } = await axios.put(
-      `http://localhost:8080/api/update/user`,
-      user
+      `http://localhost:8080/api/users/update/user?userId=${id}`, // Pass userId as a query parameter
+      userRequest // Send the rest of the user object in the body
     );
 
     dispatch({

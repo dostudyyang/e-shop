@@ -12,6 +12,7 @@ import PaymentScreen from "./screens/PaymentScreen";
 import AdminUserAccount from "./screens/AdminUserAccount";
 import AdminScreen from "./screens/AdminScreen";
 import UserEdit from "./screens/UserEdit";
+import UserProfileScreen from "./screens/UserProfileScreen";
 
 function App() {
   return (
@@ -29,7 +30,8 @@ function App() {
               <Route path="/payment" Component={PaymentScreen} />
               <Route path="/admin/users" Component={AdminUserAccount} />
               <Route path="/admin" Component={AdminScreen} />
-              <Route path="/admin/user/:id/edit" Component={UserEdit} />
+              <Route path="/user/:id/edit" Component={UserEdit} />
+              <Route path="/userProfile" Component={UserProfileScreen} />
             </Routes>
           </Router>
         </Container>
