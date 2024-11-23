@@ -29,17 +29,18 @@ public class OrderService {
     private AddressRepository addressRepository;
     private UserRepository userRepository;
 
+    private EmailService emailService;
+
     @Autowired
-    public OrderService(ItemRepository itemRepository,
-                        OrderItemsRepository orderItemsRepository,
-                        OrderRepository orderRepository,
-                        AddressRepository addressRepository,
-                        UserRepository userRepository) {
+    public OrderService(ItemRepository itemRepository, OrderItemsRepository orderItemsRepository,
+                        OrderRepository orderRepository, AddressRepository addressRepository,
+                        UserRepository userRepository, EmailService emailService) {
         this.itemRepository = itemRepository;
         this.orderItemsRepository = orderItemsRepository;
         this.orderRepository = orderRepository;
         this.addressRepository = addressRepository;
         this.userRepository = userRepository;
+        this.emailService = emailService;
     }
 
     // 只需要调用 set 方法设置 @ManyToOne 的属性后，Spring Data JPA 会自动维护 @OneToMany 的反向关系
@@ -104,6 +105,13 @@ public class OrderService {
         if (userPayment < orderPrice) {
             throw new Exception("User Payment is not enough!");
         }
+
+        // Send order confirmation email
+        emailService.sendEmail(
+                "owen19980917@gmail.com",
+                "Order Confirmation",
+                "Your order price is $" + orderPrice + "\nYour order has been successfully processed."
+        );
 
         return true;
 

@@ -4,6 +4,7 @@ import com.yang2.e_shop_master.entity.Order;
 import com.yang2.e_shop_master.entity.User;
 import com.yang2.e_shop_master.requestmodels.OrderRequest;
 import com.yang2.e_shop_master.responsemodels.OrderResponse;
+import com.yang2.e_shop_master.service.EmailService;
 import com.yang2.e_shop_master.service.OrderService;
 import com.yang2.e_shop_master.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -58,7 +59,10 @@ public class OrderController {
             throw new Exception("User is not exist!");
         }
 
-        return orderService.latestOrderSummary(user.get());
+
+        OrderResponse orderResponse = orderService.latestOrderSummary(user.get());
+
+        return orderResponse;
     }
 
     @GetMapping("/orderDetails")

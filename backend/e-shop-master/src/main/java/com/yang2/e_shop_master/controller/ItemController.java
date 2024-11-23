@@ -90,6 +90,11 @@ public class ItemController {
         return itemService.findByBrand(brand, pageable);
     }
 
+    @PutMapping("/update/itemQuantity")
+    public void updateItemQuantity(@RequestParam("itemId") Long itemId, @RequestParam("quantity") Integer quantity) throws Exception {
+        itemService.updateItemQuantity(itemId, quantity);
+    }
+
     private Sort createSort(String sortBy, String direction){
         if (sortBy != null && !sortBy.isEmpty()) {
             if (direction != null && !direction.isEmpty()) {
