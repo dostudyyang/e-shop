@@ -13,6 +13,7 @@ import AdminUserAccount from "./screens/AdminUserAccount";
 import AdminScreen from "./screens/AdminScreen";
 import UserEdit from "./screens/UserEdit";
 import UserProfileScreen from "./screens/UserProfileScreen";
+import AdminInventory from "./screens/AdminInventory";
 
 function App() {
   return (
@@ -32,6 +33,7 @@ function App() {
               <Route path="/admin" Component={AdminScreen} />
               <Route path="/user/:id/edit" Component={UserEdit} />
               <Route path="/userProfile" Component={UserProfileScreen} />
+              <Route path="/admin/inventory" Component={AdminInventory} />
             </Routes>
           </Router>
         </Container>

@@ -119,7 +119,14 @@ export const productUpdateReducer = (state = { product: {} }, action) => {
       return { loading: true };
 
     case PRODUCT_UPDATE_SUCCESS:
-      return { loading: false, success: true, product: action.payload };
+      return {
+        ...state,
+        products: state.products.map((product) =>
+          product.id === action.payload.id
+            ? { ...product, quantity: action.payload.quantity }
+            : product
+        ),
+      };
 
     case PRODUCT_UPDATE_FAIL:
       return { loading: false, error: action.payload };
