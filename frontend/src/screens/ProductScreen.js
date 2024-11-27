@@ -17,6 +17,7 @@ import {
   listProductDetails,
   createProductReview,
 } from "../redux/actions/productActions";
+import { addToCart } from "../redux/actions/cartActions";
 import { PRODUCT_CREATE_REVIEW_RESET } from "../redux/constants/productConstants";
 
 function ProductScreen() {
@@ -51,7 +52,8 @@ function ProductScreen() {
   }, [dispatch, id, successProductReview]);
 
   const addToCartHandler = () => {
-    navigate(`/cart/${id}?qty=${qty}`);
+    dispatch(addToCart(id, qty)); // Dispatch add-to-cart action
+    navigate("/cart"); // Redirect to cart screen
   };
 
   const submitHandler = (e) => {
@@ -138,14 +140,16 @@ function ProductScreen() {
                   )}
 
                   <ListGroup.Item>
-                    <Button
-                      onClick={addToCartHandler}
-                      className="btn-block"
-                      disabled={product.countInStock === 0}
-                      type="button"
-                    >
-                      Add to Cart
-                    </Button>
+                    <div className="text-center">
+                      <Button
+                        onClick={addToCartHandler}
+                        className="btn-block"
+                        disabled={product.countInStock === 0}
+                        type="button"
+                      >
+                        Add to Cart
+                      </Button>
+                    </div>
                   </ListGroup.Item>
                 </ListGroup>
               </Card>

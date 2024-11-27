@@ -5,7 +5,7 @@ import HomeScreen from "./screens/HomeScreen";
 import { Container } from "react-bootstrap";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import ProductScreen from "./screens/ProductScreen";
-import ShoppingCartScreen from "./screens/ShoppingCartScreen";
+import ShoppingCart from "./screens/ShoppingCartScreen";
 import LoginScreen from "./screens/LoginScreen";
 import RegisterScreen from "./screens/RegisterScreen";
 import PaymentScreen from "./screens/PaymentScreen";
@@ -25,7 +25,7 @@ function App() {
             <Routes>
               <Route path="/" Component={HomeScreen} exact />
               <Route path="/product/:id" Component={ProductScreen} />
-              <Route path="/product/:id" Component={ShoppingCartScreen} />
+
               <Route path="/login" Component={LoginScreen} />
               <Route path="/register" Component={RegisterScreen} />
               <Route path="/payment" Component={PaymentScreen} />
@@ -34,6 +34,8 @@ function App() {
               <Route path="/user/:id/edit" Component={UserEdit} />
               <Route path="/userProfile" Component={UserProfileScreen} />
               <Route path="/admin/inventory" Component={AdminInventory} />
+              <Route path="/cart/:id" Component={ShoppingCart} />
+              <Route path="/cart" Component={ShoppingCart} />
             </Routes>
           </Router>
         </Container>
