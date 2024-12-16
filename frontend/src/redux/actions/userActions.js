@@ -29,7 +29,7 @@ import {
 
 import { ORDER_LIST_MY_RESET } from "../constants/orderConstants";
 
-export const login = (email, password) => async (dispatch) => {
+export const login = (userEmail, password) => async (dispatch) => {
   try {
     dispatch({
       type: USER_LOGIN_REQUEST,
@@ -43,7 +43,7 @@ export const login = (email, password) => async (dispatch) => {
 
     const { data } = await axios.post(
       "http://localhost:8080/api/users/login",
-      { userEmail: email, password: password },
+      { password: password, userEmail: userEmail },
       config
     );
 

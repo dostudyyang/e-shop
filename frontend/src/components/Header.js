@@ -5,8 +5,19 @@ import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
 import NavDropdown from "react-bootstrap/NavDropdown";
 import { LinkContainer } from "react-router-bootstrap";
+import { useDispatch, useSelector } from "react-redux";
+import { logout } from "../redux/actions/userActions";
 
 function NavScrollExample() {
+  const dispatch = useDispatch();
+  const userLogin = useSelector((state) => state.userLogin);
+  const { userInfo } = userLogin;
+
+  const logoutHandler = () => {
+    dispatch(logout());
+    alert("You have been logged out successfully.");
+  };
+
   return (
     <Navbar expand="lg" className="bg-body-tertiary">
       <Container fluid>
@@ -21,9 +32,16 @@ function NavScrollExample() {
             <Nav.Link href="/cart">
               <i class="fa-solid fa-cart-shopping">cart</i>
             </Nav.Link>
-            <Nav.Link href="/login">
-              <i class="fa-solid fa-right-to-bracket">login</i>
-            </Nav.Link>
+
+            {userInfo ? (
+              <Nav.Link onClick={logoutHandler}>
+                <i class="fa-solid fa-circle-xmark"> Logout</i>
+              </Nav.Link>
+            ) : (
+              <Nav.Link href="/login">
+                <i className="fa-solid fa-right-to-bracket"> Login</i>
+              </Nav.Link>
+            )}
             <Nav.Link href="/userProfile">
               <i class="fa-solid fa-user">USER</i>
             </Nav.Link>
