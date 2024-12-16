@@ -8,6 +8,7 @@ import com.yang2.e_shop_master.responsemodels.UserResponse;
 import com.yang2.e_shop_master.service.AddressService;
 import com.yang2.e_shop_master.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Optional;
@@ -74,6 +75,7 @@ public class UserController {
      *                    (Optional) phone, address(street, province, country, zip), creditCardNum
      */
     @PostMapping("/add/user")
+    @ResponseStatus(HttpStatus.CREATED)
     public void postUser(@RequestBody UserRequest userRequest){
 
         if (userRequest.getAddress() != null) {

@@ -30,7 +30,7 @@ function RegisterScreen() {
   const redirect = location.search ? location.search.split("=")[1] : "/";
 
   const userRegister = useSelector((state) => state.userRegister);
-  const { error, loading, userInfo } = userRegister;
+  const { error, loading, userInfo, success } = userRegister;
 
   const address =
     street && province && country && zip
@@ -42,6 +42,13 @@ function RegisterScreen() {
       navigate(redirect);
     }
   }, [navigate, userInfo, redirect]);
+
+  useEffect(() => {
+    if (success) {
+      alert("Registration successful!");
+      navigate(redirect ? `/login?redirect=${redirect}` : "/login");
+    }
+  }, [navigate, success, redirect]);
 
   const submitHandler = (e) => {
     e.preventDefault();

@@ -130,12 +130,12 @@ export const register =
         userRequest,
         config
       );
-
-      dispatch({
-        type: USER_REGISTER_SUCCESS,
-        payload: data,
-      });
-
+      dispatch({ type: USER_REGISTER_SUCCESS });
+      // dispatch({
+      //   type: USER_REGISTER_SUCCESS,
+      //   payload: data,
+      // });
+      console.log("Dispatch successful:", data);
       dispatch({
         type: USER_LOGIN_SUCCESS,
         payload: data,
