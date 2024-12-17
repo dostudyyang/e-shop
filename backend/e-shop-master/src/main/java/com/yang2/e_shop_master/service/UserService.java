@@ -54,9 +54,10 @@ public class UserService {
         userRepository.save(user);
     }
 
-    public Boolean loginAuthenticate(UserRequest userRequest) throws Exception {
+    public Long loginAuthenticate(UserRequest userRequest) throws Exception {
 
         User user = userRepository.findUserByUserEmail(userRequest.getUserEmail());
+        Long userId = null;
         if (user == null) {
             throw new Exception("User not found");
         }
@@ -64,7 +65,12 @@ public class UserService {
         String rawPassword = userRequest.getPassword();
         String encodedPassword = user.getPassword();
 
-        return passwordEncoder.matches(rawPassword, encodedPassword);
+        if(passwordEncoder.matches(rawPassword, encodedPassword)){
+            userId = user.getId();
+        }else {
+            throw new Exception("Wrong Password!");
+        }
+        return userId;
 
     }
 
@@ -105,14 +111,17 @@ public class UserService {
             throw new Exception("User not found");
         }
 
-        Optional<Address> address = addressRepository.findById(user.get().getAddressId());
-
         userResponse.setUserEmail(user.get().getUserEmail());
         userResponse.setFirstName(user.get().getFirstName());
         userResponse.setLastName(user.get().getLastName());
         userResponse.setPhone(user.get().getPhone());
-        userResponse.setAddress(address.get());
         userResponse.setCreditCardNum(user.get().getCreditCardNum());
+
+        if(user.get().getAddressId() != null){
+            Optional<Address> address = addressRepository.findById(user.get().getAddressId());
+            userResponse.setAddress(address.get());
+        }
+
 
         return userResponse;
 

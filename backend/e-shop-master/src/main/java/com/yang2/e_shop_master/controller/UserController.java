@@ -64,7 +64,7 @@ public class UserController {
      * @return
      */
     @PostMapping("/login")
-    public Boolean loginAuthenticate(@RequestBody UserRequest userRequest) throws Exception {
+    public Long loginAuthenticate(@RequestBody UserRequest userRequest) throws Exception {
         return userService.loginAuthenticate(userRequest);
     }
 
