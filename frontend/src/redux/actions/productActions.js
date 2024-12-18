@@ -23,27 +23,54 @@ import {
   PRODUCT_TOP_FAIL,
 } from "../constants/productConstants";
 
-export const listProducts = () => async (dispatch) => {
-  try {
-    dispatch({ type: PRODUCT_LIST_REQUEST });
+// export const listProducts = () => async (dispatch) => {
+//   try {
+//     dispatch({ type: PRODUCT_LIST_REQUEST });
 
-    const { data } = await axios.get("http://localhost:8080/api/items");
+//     const { data } = await axios.get("http://localhost:8080/api/items");
+//     console.log("data state:", data);
+//     dispatch({
+//       type: PRODUCT_LIST_SUCCESS,
+//       payload: data,
+//     });
+//   } catch (error) {
+//     console.error("Error in listProducts action:", error); // Add this line
+//     dispatch({
+//       type: PRODUCT_LIST_FAIL,
+//       payload:
+//         error.response && error.response.data.detail
+//           ? error.response.data.detail
+//           : error.message,
+//     });
+//   }
+// };
 
-    dispatch({
-      type: PRODUCT_LIST_SUCCESS,
-      payload: data,
-    });
-  } catch (error) {
-    console.error("Error in listProducts action:", error); // Add this line
-    dispatch({
-      type: PRODUCT_LIST_FAIL,
-      payload:
-        error.response && error.response.data.detail
-          ? error.response.data.detail
-          : error.message,
-    });
-  }
-};
+export const listProducts =
+  (keyword = "", pageNumber = 1, size = 20) =>
+  async (dispatch) => {
+    try {
+      dispatch({ type: PRODUCT_LIST_REQUEST });
+
+      const { data } = await axios.get(
+        `http://localhost:8080/api/items?keyword=${keyword}&page=${
+          pageNumber - 1
+        }&size=${size}`
+      );
+      console.log("data", data);
+      dispatch({
+        type: PRODUCT_LIST_SUCCESS,
+        payload: data,
+      });
+    } catch (error) {
+      dispatch({
+        type: PRODUCT_LIST_FAIL,
+        payload:
+          error.response && error.response.data.detail
+            ? error.response.data.detail
+            : error.message,
+      });
+    }
+  };
 
 export const listTopProducts = () => async (dispatch) => {
   try {

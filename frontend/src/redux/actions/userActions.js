@@ -265,10 +265,11 @@ export const listUsers = () => async (dispatch) => {
     dispatch({ type: USER_LIST_REQUEST });
 
     const { data } = await axios.get("http://localhost:8080/api/users");
-
+    console.log("data", data);
     dispatch({
       type: USER_LIST_SUCCESS,
-      payload: data._embedded.users,
+      // payload: data._embedded.users,
+      payload: data,
     });
   } catch (error) {
     dispatch({

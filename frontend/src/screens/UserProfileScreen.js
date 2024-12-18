@@ -3,12 +3,12 @@ import { Button, Container, Row, Col } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 
-function AdminScreen() {
+function UserProfileScreen() {
   const navigate = useNavigate();
   const userInfo = useSelector((state) => state.userLogin.userInfo);
 
   const handleAccountClick = () => {
-    navigate(`/user/${userInfo._id}/edit`);
+    navigate(`/user/${userInfo}/edit`);
   };
 
   const handlePurchaseHistoryClick = () => {
@@ -44,4 +44,4 @@ function AdminScreen() {
   );
 }
 
-export default AdminScreen;
+export default UserProfileScreen;
