@@ -56,7 +56,7 @@ export const listProducts =
           pageNumber - 1
         }&size=${size}`
       );
-
+      console.log("data", data);
       dispatch({
         type: PRODUCT_LIST_SUCCESS,
         payload: data,

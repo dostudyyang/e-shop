@@ -10,6 +10,7 @@ import {
   deleteUser,
   getUserInfo,
 } from "../redux/actions/userActions";
+import Paginate from "../components/Paginate";
 
 function AdminUserAccount() {
   const dispatch = useDispatch();
@@ -17,20 +18,23 @@ function AdminUserAccount() {
   const location = useLocation(); // Hook to detect navigation
   const [userInfos, setUserInfos] = useState({}); // To store additional user details
   const [fetchError, setFetchError] = useState(null); // To handle errors during fetch
+  const userList = useSelector((state) => state.userList);
+  const { error, loading, users = [], page, pages } = userList;
+  const keyword = new URLSearchParams(location.search).get("keyword") || "";
+  const pageNumber =
+    Number(new URLSearchParams(location.search).get("page")) || 1;
 
   // Redux state selectors
-  const userList = useSelector((state) => state.userList);
-  const { loading, error, users } = userList;
 
   const userDelete = useSelector((state) => state.userDelete);
   const { success: successDelete } = userDelete;
 
   // Fetch the list of users on component mount or when returning to this screen
   useEffect(() => {
-    dispatch(listUsers());
+    dispatch(listUsers(keyword, pageNumber));
     setUserInfos({}); // Reset additional user info when navigating back
     setFetchError(null); // Clear any previous fetch errors
-  }, [dispatch, successDelete, location]); // Add location as a dependency
+  }, [dispatch, successDelete, location, keyword, pageNumber]); // Add location as a dependency
 
   // Fetch additional user information (e.g., address) for all users
   useEffect(() => {
@@ -147,6 +151,13 @@ function AdminUserAccount() {
           </Table>
         </>
       )}
+      <Paginate
+        page={page}
+        pages={pages}
+        keyword={keyword}
+        isAdmin={true}
+        isAdminUser={true}
+      />
     </div>
   );
 }

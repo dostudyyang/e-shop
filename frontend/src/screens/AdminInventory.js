@@ -4,20 +4,26 @@ import { Row, Col } from "react-bootstrap";
 import { Card } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import { listProducts, updateProduct } from "../redux/actions/productActions";
-
+import { useLocation } from "react-router-dom";
+import Paginate from "../components/Paginate";
 function AdminInventory({ history }) {
   const dispatch = useDispatch();
   const productList = useSelector((state) => state.productList);
-  const { error, loading, products = [] } = productList;
+  const { error, loading, products = [], page, pages } = productList;
+
+  const location = useLocation();
+  const keyword = new URLSearchParams(location.search).get("keyword") || "";
+  const pageNumber =
+    Number(new URLSearchParams(location.search).get("page")) || 1;
+
+  useEffect(() => {
+    dispatch(listProducts(keyword, pageNumber));
+  }, [dispatch, keyword, pageNumber]);
 
   // State for managing displayed quantities
   const [quantities, setQuantities] = useState({});
 
   const [inputQuantities, setInputQuantities] = useState({});
-
-  useEffect(() => {
-    dispatch(listProducts());
-  }, [dispatch]);
 
   const handleInputChange = (id, value) => {
     setInputQuantities((prevInputQuantities) => ({
@@ -118,6 +124,7 @@ function AdminInventory({ history }) {
           ))}
         </Row>
       )}
+      <Paginate page={page} pages={pages} keyword={keyword} isAdmin={true} />
     </div>
   );
 }
