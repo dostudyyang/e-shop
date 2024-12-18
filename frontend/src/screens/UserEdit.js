@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useParams, useNavigate } from "react-router-dom";
+import { useParams, useNavigate, Link } from "react-router-dom";
 import { Form, Button, Container, Row, Col } from "react-bootstrap";
 import { getUserInfo } from "../redux/actions/userActions"; // Import getUserInfo
 import { updateUser } from "../redux/actions/userActions";
@@ -9,8 +9,8 @@ import Message from "../components/Message";
 import { USER_UPDATE_RESET } from "../redux/constants/userConstants";
 
 function UserEditScreen() {
-  const { id } = useParams(); // Get userId from URL
-  console.log("User ID:", id);
+  // const { id } = useParams(); // Get userId from URL
+  const id = useSelector((state) => state.userLogin.userInfo);
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
@@ -42,7 +42,7 @@ function UserEditScreen() {
         const data = await dispatch(getUserInfo(id)); // Fetch user info using getUserInfo
         if (data) {
           setRole(data.role || "");
-          setPassword(""); // Password should not be pre-filled for security reasons
+          setPassword("");
           setEmail(data.userEmail || "");
           setFirstName(data.firstName || "");
           setLastName(data.lastName || "");
@@ -69,7 +69,8 @@ function UserEditScreen() {
   useEffect(() => {
     if (successUpdate) {
       dispatch({ type: USER_UPDATE_RESET });
-      navigate("/admin/users");
+      alert("update successful!");
+      navigate("/userProfile");
     }
   }, [successUpdate, navigate, dispatch]);
 
@@ -201,7 +202,7 @@ function UserEditScreen() {
 
             {/* Credit Card */}
             <Form.Group controlId="creditCard">
-              <Form.Label>Credit Card</Form.Label>
+              <h5>Credit Card Number</h5>
               <Form.Control
                 type="text"
                 placeholder="Enter credit card number"
