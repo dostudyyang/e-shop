@@ -25,13 +25,4 @@ public class OrderItems {
     @Column(name = "quantity")
     private Integer quantity;
 
-    @Override
-    public String toString() {
-        return "OrderItems{" +
-                "id=" + id +
-                ", orderId=" + (order != null ? order.getId() : null) +
-                ", itemId=" + (item != null ? item.getId() : null) +
-                ", quantity=" + quantity +
-                '}';
-    }
 }
