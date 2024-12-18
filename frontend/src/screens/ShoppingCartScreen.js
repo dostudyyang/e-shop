@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import {
   Row,
@@ -21,8 +21,20 @@ function CartScreen({ match, location, history }) {
     dispatch(removeFromCart(id));
   };
 
-  const checkoutHandler = () => {
-    history.push("/login?redirect=shipping");
+  const userLogin = useSelector((state) => state.userLogin);
+  const { userInfo } = userLogin;
+
+  const navigate = useNavigate();
+
+  const handleNavigation = () => {
+    navigate("/userInfo?redirect=shipping");
+    if (userInfo) {
+      // If user is logged in, navigate to /shipping
+      navigate("/shipping");
+    } else {
+      alert("Please log in or create a new account to proceed with checkout.");
+      navigate("/login");
+    }
   };
   return (
     <div>
@@ -103,7 +115,7 @@ function CartScreen({ match, location, history }) {
                   type="button"
                   className="btn-block"
                   disabled={cartItems.length === 0}
-                  onClick={checkoutHandler}
+                  onClick={handleNavigation}
                 >
                   Proceed To Checkout
                 </Button>

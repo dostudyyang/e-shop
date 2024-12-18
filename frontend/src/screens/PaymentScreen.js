@@ -25,11 +25,11 @@ function PaymentScreen() {
   const [cardNumber, setCardNumber] = useState("");
   const [paymentStatus, setPaymentStatus] = useState(null);
 
-  useEffect(() => {
-    if (!shippingAddress.address) {
-      navigate("/shipping");
-    }
-  }, [shippingAddress, navigate]);
+  // useEffect(() => {
+  //   if (!shippingAddress.address) {
+  //     navigate("/shipping");
+  //   }
+  // }, [shippingAddress, navigate]);
 
   const submitHandler = (e) => {
     e.preventDefault();

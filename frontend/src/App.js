@@ -14,6 +14,7 @@ import AdminScreen from "./screens/AdminScreen";
 import UserEdit from "./screens/UserEdit";
 import UserProfileScreen from "./screens/UserProfileScreen";
 import AdminInventory from "./screens/AdminInventory";
+import ShippingScreen from "./screens/ShippingScreen";
 
 function App() {
   return (
@@ -36,6 +37,7 @@ function App() {
               <Route path="/admin/inventory" Component={AdminInventory} />
               <Route path="/cart/:id" Component={ShoppingCart} />
               <Route path="/cart" Component={ShoppingCart} />
+              <Route path="/shipping" Component={ShippingScreen} />
             </Routes>
           </Router>
         </Container>
