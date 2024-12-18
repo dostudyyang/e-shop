@@ -9,7 +9,6 @@ import javax.persistence.*;
 @Entity
 @Table(name = "order_items")
 @Data
-@EqualsAndHashCode(exclude = {"order", "item"})
 public class OrderItems {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -25,4 +24,14 @@ public class OrderItems {
 
     @Column(name = "quantity")
     private Integer quantity;
+
+    @Override
+    public String toString() {
+        return "OrderItems{" +
+                "id=" + id +
+                ", orderId=" + (order != null ? order.getId() : null) +
+                ", itemId=" + (item != null ? item.getId() : null) +
+                ", quantity=" + quantity +
+                '}';
+    }
 }
