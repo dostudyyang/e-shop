@@ -30,7 +30,7 @@ public class UserController {
     /**
      *
      * @param userId
-     * @return userEmail, firstName, LastName, phone, address(street, province, country, zip), creditCardNum
+     * @return role, userEmail, firstName, LastName, phone, address(street, province, country, zip), creditCardNum
      * @throws Exception
      */
     @GetMapping("/load/userInfo")

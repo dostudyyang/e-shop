@@ -111,6 +111,7 @@ public class UserService {
             throw new Exception("User not found");
         }
 
+        userResponse.setRole(user.get().getRole());
         userResponse.setUserEmail(user.get().getUserEmail());
         userResponse.setFirstName(user.get().getFirstName());
         userResponse.setLastName(user.get().getLastName());
