@@ -108,7 +108,7 @@ public class OrderService {
 
         // Send order confirmation email
         emailService.sendEmail(
-                "owen19980917@gmail.com",
+                userEmail,
                 "Order Confirmation",
                 "Your order price is $" + orderPrice + "\nYour order has been successfully processed."
         );
