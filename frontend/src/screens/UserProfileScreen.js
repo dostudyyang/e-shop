@@ -12,7 +12,7 @@ function UserProfileScreen() {
   };
 
   const handlePurchaseHistoryClick = () => {
-    navigate("/admin/sales-history");
+    navigate("/myorder");
   };
 
   return (

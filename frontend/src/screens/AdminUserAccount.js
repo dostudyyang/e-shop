@@ -68,7 +68,6 @@ function AdminUserAccount() {
   };
 
   const handleEdit = (userId) => {
-    console.log("Navigating to edit user:", userId);
     navigate(`/user/${userId}/edit`);
   };
 

@@ -4,52 +4,57 @@ import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import Message from "../components/Message";
 import CheckoutSteps from "../components/CheckoutSteps";
-import { createOrder } from "../actions/orderActions";
-import { ORDER_CREATE_RESET } from "../constants/orderConstants";
+import {
+  createOrder,
+  payOrder,
+  deliverOrder,
+} from "../redux/actions/orderActions";
+import { ORDER_CREATE_RESET } from "../redux/constants/orderConstants";
+import { useNavigate } from "react-router-dom";
 
 function PlaceOrderScreen({ history }) {
   const orderCreate = useSelector((state) => state.orderCreate);
   const { order, error, success } = orderCreate;
-
+  const userLogin = useSelector((state) => state.userLogin);
+  const { userInfo } = userLogin;
   const dispatch = useDispatch();
-
+  const navigate = useNavigate();
   const cart = useSelector((state) => state.cart);
 
   cart.itemsPrice = cart.cartItems
     .reduce((acc, item) => acc + item.price * item.qty, 0)
     .toFixed(2);
   cart.shippingPrice = (cart.itemsPrice > 100 ? 0 : 10).toFixed(2);
-  cart.taxPrice = Number(0.082 * cart.itemsPrice).toFixed(2);
+  cart.taxPrice = Number(0.13 * cart.itemsPrice).toFixed(2);
 
   cart.totalPrice = (
     Number(cart.itemsPrice) +
     Number(cart.shippingPrice) +
     Number(cart.taxPrice)
   ).toFixed(2);
-
+  const totalPricePayment = cart.totalPrice;
   if (!cart.paymentMethod) {
     history.push("/payment");
   }
 
   useEffect(() => {
     if (success) {
-      history.push(`/order/${order._id}`);
+      alert("order successful!");
       dispatch({ type: ORDER_CREATE_RESET });
+      navigate("/");
     }
   }, [success, history]);
 
   const placeOrder = () => {
-    dispatch(
-      createOrder({
-        orderItems: cart.cartItems,
-        shippingAddress: cart.shippingAddress,
-        paymentMethod: cart.paymentMethod,
-        itemsPrice: cart.itemsPrice,
-        shippingPrice: cart.shippingPrice,
-        taxPrice: cart.taxPrice,
-        totalPrice: cart.totalPrice,
-      })
-    );
+    const itemQuantities = {};
+    cart.cartItems.forEach((item) => {
+      itemQuantities[item.id] = item.qty;
+    });
+
+    dispatch(createOrder(userInfo, itemQuantities));
+    dispatch(deliverOrder(userInfo));
+    console.log("totalPricePayment", totalPricePayment);
+    dispatch(payOrder(userInfo, totalPricePayment));
   };
 
   return (
@@ -88,12 +93,7 @@ function PlaceOrderScreen({ history }) {
                     <ListGroup.Item key={index}>
                       <Row>
                         <Col md={1}>
-                          <Image
-                            src={item.image}
-                            alt={item.name}
-                            fluid
-                            rounded
-                          />
+                          <Image src={item.img} alt={item.name} fluid rounded />
                         </Col>
 
                         <Col>

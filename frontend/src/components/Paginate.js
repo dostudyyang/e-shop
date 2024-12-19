@@ -8,6 +8,7 @@ function Paginate({
   keyword = "",
   isAdmin = false,
   isAdminUser = false,
+  isMyOrder = false,
 }) {
   if (keyword) {
     keyword = keyword.split("?keyword=")[1]?.split("&")[0] || "";
@@ -20,7 +21,9 @@ function Paginate({
           <LinkContainer
             key={x + 1}
             to={{
-              pathname: !isAdmin
+              pathname: isMyOrder
+                ? "/myorder"
+                : !isAdmin
                 ? "/"
                 : isAdminUser
                 ? "/admin/users"

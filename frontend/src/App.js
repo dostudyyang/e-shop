@@ -16,6 +16,9 @@ import UserProfileScreen from "./screens/UserProfileScreen";
 import AdminInventory from "./screens/AdminInventory";
 import ShippingScreen from "./screens/ShippingScreen";
 import SearchScreen from "./screens/SearchScreen";
+import PlaceOrderScreen from "./screens/PlaceOrderScreen";
+import MyOrderScreen from "./screens/MyOrderScreen";
+import OrderDetail from "./screens/OrderDetail";
 
 function App() {
   return (
@@ -39,6 +42,9 @@ function App() {
               <Route path="/cart/:id" Component={ShoppingCart} />
               <Route path="/cart" Component={ShoppingCart} />
               <Route path="/shipping" Component={ShippingScreen} />
+              <Route path="/placeorder" Component={PlaceOrderScreen} />
+              <Route path="/myorder" Component={MyOrderScreen} />
+              <Route path="/order/:id" Component={OrderDetail} />
             </Routes>
           </Router>
         </Container>
