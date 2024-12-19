@@ -2,6 +2,7 @@ package com.yang2.e_shop_master.controller;
 
 
 import com.yang2.e_shop_master.entity.Item;
+import com.yang2.e_shop_master.requestmodels.ItemRequest;
 import com.yang2.e_shop_master.service.ItemService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -9,6 +10,8 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @CrossOrigin("http://localhost:3000")
 @RestController
@@ -89,6 +92,27 @@ public class ItemController {
         Pageable pageable = PageRequest.of(page, size, sort);
         return itemService.findByBrand(brand, pageable);
     }
+
+    /**
+     * Sort items based on given parameters.
+     *
+     * @param sortBy      name or price
+     * @param direction   asc or desc
+     * @param page
+     * @param size
+     * @return            A page of sorted items.
+     */
+    @PostMapping("/sort")
+    public Page<Item> sortItems(
+            @RequestParam(value = "sortBy", required = false, defaultValue = "price") String sortBy,
+            @RequestParam(value = "direction", required = false, defaultValue = "asc") String direction,
+            @RequestParam(value = "page", required = false, defaultValue = "0") int page,
+            @RequestParam(value = "size", required = false, defaultValue = "5") int size,
+            @RequestBody ItemRequest itemRequest) {
+        return itemService.sortItems(itemRequest.getItems(), sortBy, direction, page, size);
+    }
+
+
 
     @PutMapping("/update/itemQuantity")
     public void updateItemQuantity(@RequestParam("itemId") Long itemId, @RequestParam("quantity") Integer quantity) throws Exception {
