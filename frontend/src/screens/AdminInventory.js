@@ -13,11 +13,13 @@ function AdminInventory({ history }) {
 
   const location = useLocation();
   const keyword = new URLSearchParams(location.search).get("keyword") || "";
-  const pageNumber =
-    Number(new URLSearchParams(location.search).get("page")) || 1;
+  const searchParams = new URLSearchParams(location.search);
+  const searchType = searchParams.get("type") || ""; // Default to "name" search type
+  const query = searchParams.get("query") || ""; // Extract query (keyword)
+  const pageNumber = Number(searchParams.get("page")) || 1; // Extract page number
 
   useEffect(() => {
-    dispatch(listProducts(keyword, pageNumber));
+    dispatch(listProducts(query, keyword, pageNumber));
   }, [dispatch, keyword, pageNumber]);
 
   // State for managing displayed quantities
