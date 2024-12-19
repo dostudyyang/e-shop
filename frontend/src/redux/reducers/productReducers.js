@@ -23,6 +23,7 @@ import {
   PRODUCT_TOP_REQUEST,
   PRODUCT_TOP_SUCCESS,
   PRODUCT_TOP_FAIL,
+  PRODUCT_SEARCH_SUCCESS,
 } from "../constants/productConstants";
 
 export const initialState = {
@@ -41,6 +42,7 @@ export const productListReducer = (state = { products: [] }, action) => {
   switch (action.type) {
     case PRODUCT_LIST_REQUEST:
       return { loading: true, products: [] };
+
     case PRODUCT_LIST_SUCCESS:
       const productsWithId = action.payload._embedded.items.map((item) => ({
         ...item,
@@ -52,12 +54,63 @@ export const productListReducer = (state = { products: [] }, action) => {
         page: action.payload.page.number,
         pages: action.payload.page.totalPages,
       };
+
+    case PRODUCT_SEARCH_SUCCESS:
+      // Handle searching for specific products by name, category, or brand
+      return {
+        loading: false,
+        searchResults: action.payload.content, // Use 'content' for search results
+        page: action.payload.number + 1,
+        pages: action.payload.totalPages,
+      };
+
     case PRODUCT_LIST_FAIL:
       return { loading: false, error: action.payload };
+
     default:
       return state;
   }
 };
+
+// export const productListReducer = (state = { products: [] }, action) => {
+//   switch (action.type) {
+//     case PRODUCT_LIST_REQUEST:
+//       return { loading: true, products: [] };
+//     case PRODUCT_LIST_SUCCESS:
+//       const productsWithId = action.payload._embedded.items.map((item) => ({
+//         ...item,
+//         id: extractIdFromLink(item._links.self),
+//       }));
+//       return {
+//         loading: false,
+//         products: productsWithId,
+//         page: action.payload.page.number,
+//         pages: action.payload.page.totalPages,
+//       };
+//     case PRODUCT_LIST_FAIL:
+//       return { loading: false, error: action.payload };
+//     default:
+//       return state;
+//   }
+// };
+
+// export const productListReducer = (state = { products: [] }, action) => {
+//   switch (action.type) {
+//     case PRODUCT_LIST_REQUEST:
+//       return { loading: true, products: [] };
+//     case PRODUCT_LIST_SUCCESS:
+//       return {
+//         loading: false,
+//         products: action.payload.content, // Map 'content' from the backend response
+//         page: action.payload.number + 1, // Adjust page number (backend uses 0-based indexing)
+//         pages: action.payload.totalPages, // Total number of pages
+//       };
+//     case PRODUCT_LIST_FAIL:
+//       return { loading: false, error: action.payload };
+//     default:
+//       return state;
+//   }
+// };
 
 export const productDetailsReducer = (
   state = { product: { reviews: [] } },

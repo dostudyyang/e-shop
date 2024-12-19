@@ -21,6 +21,7 @@ import {
   PRODUCT_TOP_REQUEST,
   PRODUCT_TOP_SUCCESS,
   PRODUCT_TOP_FAIL,
+  PRODUCT_SEARCH_SUCCESS,
 } from "../constants/productConstants";
 
 // export const listProducts = () => async (dispatch) => {
@@ -45,23 +46,130 @@ import {
 //   }
 // };
 
+// export const listProducts =
+//   (keyword = "", pageNumber = 1, size = 20) =>
+//   async (dispatch) => {
+//     try {
+//       dispatch({ type: PRODUCT_LIST_REQUEST });
+
+//       const { data } = await axios.get(
+//         `http://localhost:8080/api/items?keyword=${keyword}&page=${
+//           pageNumber - 1
+//         }&size=${size}`
+//       );
+//       console.log("data", data);
+//       dispatch({
+//         type: PRODUCT_LIST_SUCCESS,
+//         payload: data,
+//       });
+//     } catch (error) {
+//       dispatch({
+//         type: PRODUCT_LIST_FAIL,
+//         payload:
+//           error.response && error.response.data.detail
+//             ? error.response.data.detail
+//             : error.message,
+//       });
+//     }
+//   };
+
+// export const listProducts =
+//   (searchType = "keyword", query = "", pageNumber = 1, size = 20) =>
+//   async (dispatch) => {
+//     try {
+//       dispatch({ type: PRODUCT_LIST_REQUEST });
+
+//       // Base URL for your backend
+//       const baseUrl = "http://localhost:8080/api/items";
+
+//       // Determine the endpoint based on searchType
+//       let url = "";
+//       if (searchType === "name") {
+//         url = `${baseUrl}/find/findByName?name=${query}&page=${
+//           pageNumber - 1
+//         }&size=${size}`;
+//       } else if (searchType === "category") {
+//         url = `${baseUrl}/find/findByCategory?category=${query}&page=${
+//           pageNumber - 1
+//         }&size=${size}`;
+//       } else if (searchType === "brand") {
+//         url = `${baseUrl}/find/findByBrand?brand=${query}&page=${
+//           pageNumber - 1
+//         }&size=${size}`;
+//       } else {
+//         // Default to keyword search (or fallback)
+//         url = `${baseUrl}?keyword=${query}&page=${pageNumber - 1}&size=${size}`;
+//       }
+
+//       // Fetch data from the backend
+//       const { data } = await axios.get(url);
+
+//       console.log("data", data);
+
+//       // Dispatch success action with fetched data
+//       dispatch({
+//         type: PRODUCT_LIST_SUCCESS,
+//         payload: data,
+//       });
+//     } catch (error) {
+//       // Dispatch failure action with error message
+//       dispatch({
+//         type: PRODUCT_LIST_FAIL,
+//         payload:
+//           error.response && error.response.data.detail
+//             ? error.response.data.detail
+//             : error.message,
+//       });
+//     }
+//   };
+
 export const listProducts =
-  (keyword = "", pageNumber = 1, size = 20) =>
+  (searchType = "keyword", query = "", pageNumber = 1, size = 20) =>
   async (dispatch) => {
     try {
       dispatch({ type: PRODUCT_LIST_REQUEST });
 
-      const { data } = await axios.get(
-        `http://localhost:8080/api/items?keyword=${keyword}&page=${
+      // Base URL for your backend
+      const baseUrl = "http://localhost:8080/api/items";
+
+      // Determine the endpoint based on searchType
+      let url = "";
+      if (searchType === "name") {
+        url = `${baseUrl}/find/findByName?name=${query}&page=${
           pageNumber - 1
-        }&size=${size}`
-      );
+        }&size=${size}`;
+      } else if (searchType === "category") {
+        url = `${baseUrl}/find/findByCategory?category=${query}&page=${
+          pageNumber - 1
+        }&size=${size}`;
+      } else if (searchType === "brand") {
+        url = `${baseUrl}/find/findByBrand?brand=${query}&page=${
+          pageNumber - 1
+        }&size=${size}`;
+      } else {
+        // Default to fetching all products
+        url = `${baseUrl}?page=${pageNumber - 1}&size=${size}`;
+      }
+
+      // Fetch data from the backend
+      const { data } = await axios.get(url);
+
       console.log("data", data);
-      dispatch({
-        type: PRODUCT_LIST_SUCCESS,
-        payload: data,
-      });
+
+      // Dispatch appropriate success action based on searchType
+      if (searchType === "keyword" || query === "") {
+        dispatch({
+          type: PRODUCT_LIST_SUCCESS, // For fetching all products
+          payload: data,
+        });
+      } else {
+        dispatch({
+          type: PRODUCT_SEARCH_SUCCESS, // For searching products
+          payload: data,
+        });
+      }
     } catch (error) {
+      // Dispatch failure action with error message
       dispatch({
         type: PRODUCT_LIST_FAIL,
         payload:
@@ -71,6 +179,60 @@ export const listProducts =
       });
     }
   };
+
+// export const listProducts =
+//   (searchType = "keyword", query = "", pageNumber = 1, size = 20) =>
+//   async (dispatch) => {
+//     try {
+//       dispatch({ type: PRODUCT_LIST_REQUEST });
+
+//       // Base URL for your backend
+//       const baseUrl = "http://localhost:8080/api/items";
+
+//       // Determine the endpoint based on searchType
+//       let url = "";
+//       if (searchType === "name") {
+//         url = `${baseUrl}/findByName?name=${query}&page=${
+//           pageNumber - 1
+//         }&size=${size}`;
+//       } else if (searchType === "category") {
+//         url = `${baseUrl}/find/findByCategory?category=${query}&page=${
+//           pageNumber - 1
+//         }&size=${size}`;
+//       } else if (searchType === "brand") {
+//         url = `${baseUrl}/findByBrand?brand=${query}&page=${
+//           pageNumber - 1
+//         }&size=${size}`;
+//       } else {
+//         // Default to keyword search (or fallback)
+//         url = `${baseUrl}?keyword=${query}&page=${pageNumber - 1}&size=${size}`;
+//       }
+
+//       // Fetch data from the backend
+//       const { data } = await axios.get(url);
+
+//       console.log("Backend Response:", data);
+
+//       // Dispatch success action with transformed data
+//       dispatch({
+//         type: PRODUCT_LIST_SUCCESS,
+//         payload: {
+//           items: data.content, // Map 'content' to 'items'
+//           page: data.number + 1, // Backend pages are 0-based; adjust to 1-based
+//           pages: data.totalPages,
+//         },
+//       });
+//     } catch (error) {
+//       // Dispatch failure action with error message
+//       dispatch({
+//         type: PRODUCT_LIST_FAIL,
+//         payload:
+//           error.response && error.response.data.detail
+//             ? error.response.data.detail
+//             : error.message,
+//       });
+//     }
+//   };
 
 export const listTopProducts = () => async (dispatch) => {
   try {

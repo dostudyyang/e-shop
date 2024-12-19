@@ -15,18 +15,19 @@ import UserEdit from "./screens/UserEdit";
 import UserProfileScreen from "./screens/UserProfileScreen";
 import AdminInventory from "./screens/AdminInventory";
 import ShippingScreen from "./screens/ShippingScreen";
+import SearchScreen from "./screens/SearchScreen";
 
 function App() {
   return (
     <div>
-      <Header />
       <main>
         <Container>
           <Router>
+            <Header />
             <Routes>
               <Route path="/" Component={HomeScreen} exact />
               <Route path="/product/:id" Component={ProductScreen} />
-
+              <Route path="/search" Component={SearchScreen} />
               <Route path="/login" Component={LoginScreen} />
               <Route path="/register" Component={RegisterScreen} />
               <Route path="/payment" Component={PaymentScreen} />
