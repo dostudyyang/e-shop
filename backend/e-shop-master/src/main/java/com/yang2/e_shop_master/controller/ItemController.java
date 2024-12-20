@@ -27,6 +27,35 @@ public class ItemController {
 
     /**
      *
+     * @param category
+     * @param brand
+     * @param page
+     * @param size
+     * @return
+     */
+    @GetMapping("/filter")
+    public Page<Item> filterItems(
+            @RequestParam(value = "category", required = false) String category,
+            @RequestParam(value = "brand", required = false) String brand,
+            @RequestParam(value = "page", required = false, defaultValue = "0") int page,
+            @RequestParam(value = "size", required = false, defaultValue = "5") int size) {
+
+        Pageable pageable = PageRequest.of(page, size);
+
+        if (category != null && brand != null) {
+            return itemService.findByCategoryAndBrand(category, brand, pageable);
+        } else if (category != null) {
+            return itemService.findByCategory(category, pageable);
+        } else if (brand != null) {
+            return itemService.findByBrand(brand, pageable);
+        } else {
+            return itemService.findAll(pageable);
+        }
+    }
+
+
+    /**
+     *
      * @param name
      * @param sortBy price or name
      * @param direction asc or desc

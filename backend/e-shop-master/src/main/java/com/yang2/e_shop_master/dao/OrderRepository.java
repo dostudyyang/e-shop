@@ -20,4 +20,23 @@ public interface OrderRepository extends JpaRepository<Order, Long> {
 
     @Query("SELECT o FROM Order o WHERE DATE(o.date) = :date")
     Page<Order> findByDate(@Param("date") Date date, Pageable pageable);
+
+    Page<Order> findAll(Pageable pageable);
+
+    @Query("SELECT o FROM Order o WHERE o.userEmail = :userEmail AND DATE(o.date) = :date")
+    Page<Order> findByUserEmailAndDate(@Param("userEmail") String userEmail, @Param("date") Date date, Pageable pageable);
+
+    @Query("SELECT o FROM Order o JOIN o.orderItems oi WHERE oi.item.id = :itemId")
+    Page<Order> findByItemId(@Param("itemId") Long itemId, Pageable pageable);
+
+    @Query("SELECT o FROM Order o JOIN o.orderItems oi WHERE o.userEmail = :userEmail AND oi.item.id = :itemId")
+    Page<Order> findByUserEmailAndItemId(@Param("userEmail") String userEmail, @Param("itemId") Long itemId, Pageable pageable);
+
+    @Query("SELECT o FROM Order o JOIN o.orderItems oi WHERE DATE(o.date) = :date AND oi.item.id = :itemId")
+    Page<Order> findByDateAndItemId(@Param("date") Date date, @Param("itemId") Long itemId, Pageable pageable);
+
+    @Query("SELECT o FROM Order o JOIN o.orderItems oi WHERE o.userEmail = :userEmail AND DATE(o.date) = :date AND oi.item.id = :itemId")
+    Page<Order> findByUserEmailAndDateAndItemId(@Param("userEmail") String userEmail,
+                                    @Param("date") Date date,
+                                    @Param("itemId") Long itemId, Pageable pageable);
 }

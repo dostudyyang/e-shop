@@ -17,4 +17,9 @@ public interface ItemRepository extends JpaRepository<Item, Long> {
 
     Page<Item> findByBrand(@RequestParam("brand") String brand, Pageable pageable);
 
+    Page<Item> findByCategoryAndBrand(@RequestParam("category") String category,
+                                      @RequestParam("brand") String brand,
+                                      Pageable pageable);
+
+    Page<Item> findAll(Pageable pageable);
 }

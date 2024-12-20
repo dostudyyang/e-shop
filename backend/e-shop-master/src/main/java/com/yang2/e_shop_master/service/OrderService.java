@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.time.LocalDate;
@@ -230,6 +231,32 @@ public class OrderService {
     }
 
 
+    public Page<Order> filterOrders(String userEmail, String stringDate, Long itemId, Pageable pageable) throws ParseException {
+
+        Date date = null;
+        if (stringDate != null){
+            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+            date = dateFormat.parse(stringDate);
+        }
+
+        if (userEmail != null && date != null && itemId != null) {
+            return orderRepository.findByUserEmailAndDateAndItemId(userEmail, date, itemId, pageable);
+        } else if (userEmail != null && date != null) {
+            return orderRepository.findByUserEmailAndDate(userEmail, date, pageable);
+        } else if (userEmail != null && itemId != null) {
+            return orderRepository.findByUserEmailAndItemId(userEmail, itemId, pageable);
+        } else if (date != null && itemId != null) {
+            return orderRepository.findByDateAndItemId(date, itemId, pageable);
+        } else if (userEmail != null) {
+            return orderRepository.findByUserEmail(userEmail, pageable);
+        } else if (date != null) {
+            return orderRepository.findByDate(date, pageable);
+        } else if (itemId != null) {
+            return orderRepository.findByItemId(itemId, pageable);
+        } else {
+            return orderRepository.findAll(pageable);
+        }
+    }
 }
 
 

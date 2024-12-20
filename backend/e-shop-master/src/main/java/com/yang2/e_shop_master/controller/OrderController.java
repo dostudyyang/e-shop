@@ -35,6 +35,27 @@ public class OrderController {
     }
 
     /**
+     * e.g. --> ?date=2024-11-15
+     * @param userEmail
+     * @param stringDate
+     * @param itemId
+     * @param page
+     * @param size
+     * @return
+     * @throws ParseException
+     */
+    @GetMapping("/filter")
+    public Page<Order> filterOrders(
+            @RequestParam(value = "userEmail", required = false) String userEmail,
+            @RequestParam(value = "date", required = false) String stringDate,
+            @RequestParam(value = "itemId", required = false) Long itemId,
+            @RequestParam(value = "page", required = false, defaultValue = "0") int page,
+            @RequestParam(value = "size", required = false, defaultValue = "5") int size) throws ParseException {
+        Pageable pageable = PageRequest.of(page, size);
+        return orderService.filterOrders(userEmail, stringDate, itemId, pageable);
+    }
+
+    /**
      *
      * @param userId
      * @param userPayment

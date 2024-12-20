@@ -38,6 +38,14 @@ public class ItemService {
         return itemRepository.findByBrand(brand, pageable);
     }
 
+    public Page<Item> findByCategoryAndBrand(String categories, String brand, Pageable pageable) {
+        return itemRepository.findByCategoryAndBrand(categories, brand, pageable);
+    }
+
+    public Page<Item> findAll(Pageable pageable) {
+        return itemRepository.findAll(pageable);
+    }
+
 
     public Page<Item> sortItems(List<Item> items, String sortBy, String direction, int page, int size) {
         // Sort the items
@@ -86,5 +94,7 @@ public class ItemService {
         item.get().setQuantity(quantity);
         itemRepository.save(item.get());
     }
+
+
 
 }
