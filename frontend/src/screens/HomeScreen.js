@@ -95,6 +95,7 @@ function HomeScreen() {
 
   // State for filters
   const [selectedCategory, setSelectedCategory] = useState("");
+  console.log("selectedCategory", selectedCategory);
   const [selectedBrand, setSelectedBrand] = useState("");
 
   // State for sorting
@@ -201,7 +202,6 @@ function HomeScreen() {
             className="btn btn-secondary mt-3"
             onClick={() => {
               setSelectedCategory("");
-
               setSelectedBrand("");
             }}
           >
@@ -245,17 +245,14 @@ function HomeScreen() {
             <h3>{sortError || error}</h3>
           ) : (
             <>
-              {/* <Row>
-                {(sortedProducts.length > 0 ? sortedProducts : products).map(
-                  (product) => (
+              <Row>
+                {sortedProducts.length > 0 ? (
+                  sortedProducts.map((product) => (
                     <Col key={product.id} sm={12} md={6} lg={4} xl={3}>
                       <Product product={product} />
                     </Col>
-                  )
-                )}
-              </Row> */}
-              <Row>
-                {filteredProducts.length > 0 ? (
+                  ))
+                ) : filteredProducts.length > 0 ? (
                   filteredProducts.map((product) => (
                     <Col key={product.id} sm={12} md={6} lg={4} xl={3}>
                       <Product product={product} />
@@ -272,14 +269,9 @@ function HomeScreen() {
                   ))
                 )}
               </Row>
-              {/* <Paginate
-                page={sortedPage || page}
-                pages={sortedPages || pages}
-                keyword={query}
-              /> */}
               <Paginate
-                page={filteredPage || page}
-                pages={filteredPages || pages}
+                page={sortedPage || filteredPage || page} // Prioritize sortedPage, then filteredPage, then default page
+                pages={sortedPages || filteredPages || pages} // Prioritize sortedPages, then filteredPages, then default pages
                 keyword={query}
               />
             </>
