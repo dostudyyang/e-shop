@@ -6,7 +6,7 @@
 This is a full-stack e-commerce application built using React (Frontend) and Spring Boot (Backend). It features a user-friendly interface, secure login/registration, item management, and more.
 
 ---
-### TeaM Name
+### Team Name
 - TechTrek
 
 ### Authors
