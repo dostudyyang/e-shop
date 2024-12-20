@@ -32,5 +32,5 @@ INSERT INTO item (category, brand, name, description, quantity, price, img) VALU
 	('Outdoor Adventure', 'Patagonia', 'Portable Grill', 'Compact grill perfect for camping and picnics.', 50, 100, 'https://raw.githubusercontent.com/dostudyyang/e-shop/master/e-shop-images/Patagonia_Portable Grill.jpg'),
 	('Outdoor Adventure', 'Patagonia', 'Water Bottle', 'Durable water bottle for hydration on the go.', 50, 15, 'https://raw.githubusercontent.com/dostudyyang/e-shop/master/e-shop-images/Patagonia_Water Bottle.jpg'),
 	('Outdoor Adventure', 'The North Face', 'Tent', 'Spacious tent suitable for camping trips.', 50, 120, 'https://raw.githubusercontent.com/dostudyyang/e-shop/master/e-shop-images/The North Face_Tent.jpg'),
-	('Outdoor Adventure', 'The North Face', 'Backpack', 'Durable backpack with ample storage space.', 50, 60, 'https://raw.githubusercontent.com/dostudyyang/e-shop/master/e-shop-imagesThe North Face_Backpack.jpg'),
+	('Outdoor Adventure', 'The North Face', 'Backpack', 'Durable backpack with ample storage space.', 50, 60, 'https://raw.githubusercontent.com/dostudyyang/e-shop/master/e-shop-images/The North Face_Backpack.jpg'),
 	('Outdoor Adventure', 'The North Face', 'Camping Stove', 'Portable stove for cooking while camping.', 50, 90, 'https://raw.githubusercontent.com/dostudyyang/e-shop/master/e-shop-images/The North Face_Camping Stove.jpg');
