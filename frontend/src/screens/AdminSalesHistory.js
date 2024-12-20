@@ -106,7 +106,7 @@ function AdminSalesHistory() {
                   </Col>
                   <Col md={3}>
                     <strong>Date:</strong>{" "}
-                    {new Date(order.date).toLocaleDateString()}
+                    {new Date(order.date).toISOString().split("T")[0]}
                   </Col>
                   <Col md={2}>
                     <strong>Total:</strong> ${order.orderPrice}
