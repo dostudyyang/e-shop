@@ -104,7 +104,6 @@ function HomeScreen() {
   // Fetch products based on filters and pagination
   useEffect(() => {
     if (selectedCategory || selectedBrand) {
-      console.log("selectedCategory", selectedCategory);
       dispatch(filterProducts(selectedCategory, selectedBrand, pageNumber));
     } else {
       dispatch(listProducts(searchType, query, pageNumber));
@@ -170,7 +169,7 @@ function HomeScreen() {
               <option value="">All Categories</option>
               <option value="Outdoor Adventure">Outdoor Adventure</option>
               <option value="Apparel">Apparel</option>
-              {/* Add more categories */}
+              <option value="Electronics">Electronics</option>
             </select>
           </div>
 
@@ -185,7 +184,15 @@ function HomeScreen() {
               <option value="">All Brands</option>
               <option value="Columbia">Columbia</option>
               <option value="Patagonia">Patagonia</option>
-              {/* Add more brands */}
+              <option value="Adidas">Adidas</option>
+              <option value="Apple">Apple</option>
+              <option value="H&M">H&M</option>
+              <option value="Huawei">Huawei</option>
+              <option value="Nike">Nike</option>
+              <option value="Samsung">Samsung</option>
+              <option value="Sony">Sony</option>
+              <option value="The North Face">The North Face</option>
+              <option value="Uniqlo">Uniqlo</option>
             </select>
           </div>
 
@@ -248,14 +255,22 @@ function HomeScreen() {
                 )}
               </Row> */}
               <Row>
-                {(filteredProducts.length > 0
-                  ? filteredProducts
-                  : products
-                ).map((product) => (
-                  <Col key={product.id} sm={12} md={6} lg={4} xl={3}>
-                    <Product product={product} />
-                  </Col>
-                ))}
+                {filteredProducts.length > 0 ? (
+                  filteredProducts.map((product) => (
+                    <Col key={product.id} sm={12} md={6} lg={4} xl={3}>
+                      <Product product={product} />
+                    </Col>
+                  ))
+                ) : filteredProducts.length === 0 &&
+                  (selectedCategory || selectedBrand) ? (
+                  <h3>No products found for the selected filters.</h3>
+                ) : (
+                  products.map((product) => (
+                    <Col key={product.id} sm={12} md={6} lg={4} xl={3}>
+                      <Product product={product} />
+                    </Col>
+                  ))
+                )}
               </Row>
               {/* <Paginate
                 page={sortedPage || page}
