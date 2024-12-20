@@ -22,3 +22,17 @@ This is a full-stack e-commerce application built using React (Frontend) and Spr
    ```properties
    spring.datasource.username=YOUR_USERNAME
    spring.datasource.password=YOUR_PASSWORD
+
+### 2. Frontend SetUp
+1. Open a terminal and navigate to the frontend folder:
+```bash
+    cd path/e-shop/frontend
+```
+2. Install dependencies:
+```bash
+    npm install
+```
+3. Start the React application:
+```bash
+    npm start
+```
