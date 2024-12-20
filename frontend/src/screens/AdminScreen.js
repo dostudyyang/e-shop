@@ -10,7 +10,7 @@ function AdminScreen() {
   };
 
   const handleSalesHistoryClick = () => {
-    navigate("/admin/sales-history");
+    navigate("/admin/salesHistory");
   };
 
   const handleUserAccountClick = () => {

@@ -24,6 +24,12 @@ import {
   PRODUCT_TOP_SUCCESS,
   PRODUCT_TOP_FAIL,
   PRODUCT_SEARCH_SUCCESS,
+  PRODUCT_SORT_REQUEST,
+  PRODUCT_SORT_SUCCESS,
+  PRODUCT_SORT_FAIL,
+  PRODUCT_FILTER_REQUEST,
+  PRODUCT_FILTER_SUCCESS,
+  PRODUCT_FILTER_FAIL,
 } from "../constants/productConstants";
 
 export const initialState = {
@@ -222,6 +228,49 @@ export const productTopRatedReducer = (state = { products: [] }, action) => {
     case PRODUCT_TOP_FAIL:
       return { loading: false, error: action.payload };
 
+    default:
+      return state;
+  }
+};
+
+export const productSortReducer = (
+  state = { sortedProducts: [], page: 0, pages: 0 },
+  action
+) => {
+  switch (action.type) {
+    case PRODUCT_SORT_REQUEST:
+      return { loading: true, sortedProducts: [] };
+    case PRODUCT_SORT_SUCCESS:
+      return {
+        loading: false,
+        sortedProducts: action.payload.content, // Use 'content' for paginated data
+        page: action.payload.pageable.pageNumber + 1, // Adjust for zero-based indexing
+        pages: action.payload.totalPages,
+        totalElements: action.payload.totalElements,
+      };
+    case PRODUCT_SORT_FAIL:
+      return { loading: false, error: action.payload };
+    default:
+      return state;
+  }
+};
+
+export const productFilterReducer = (
+  state = { filteredProducts: [], page: 0, pages: 0 },
+  action
+) => {
+  switch (action.type) {
+    case PRODUCT_FILTER_REQUEST:
+      return { loading: true, filteredProducts: [] };
+    case PRODUCT_FILTER_SUCCESS:
+      return {
+        loading: false,
+        filteredProducts: action.payload.content,
+        page: action.payload.pageable.pageNumber + 1, // Adjust for zero-based indexing
+        pages: action.payload.totalPages,
+      };
+    case PRODUCT_FILTER_FAIL:
+      return { loading: false, error: action.payload };
     default:
       return state;
   }

@@ -149,7 +149,7 @@ export const orderListMyReducer = (
         loading: false,
         orders: action.payload.content, // Use 'content' for paginated data
         pages: action.payload.totalPages, // Total number of pages
-        page: action.payload.number + 1,
+        page: action.payload.number,
       };
 
     case ORDER_LIST_MY_FAIL:
@@ -178,7 +178,9 @@ export const orderListReducer = (state = { orders: [] }, action) => {
     case ORDER_LIST_SUCCESS:
       return {
         loading: false,
-        orders: action.payload,
+        orders: action.payload._embedded.orders || [], // Use '_embedded.orders' for HAL response
+        page: action.payload.page.number + 1, // Adjust for zero-based indexing
+        pages: action.payload.page.totalPages,
       };
 
     case ORDER_LIST_FAIL:

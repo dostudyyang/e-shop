@@ -22,6 +22,12 @@ import {
   PRODUCT_TOP_SUCCESS,
   PRODUCT_TOP_FAIL,
   PRODUCT_SEARCH_SUCCESS,
+  PRODUCT_SORT_REQUEST,
+  PRODUCT_SORT_SUCCESS,
+  PRODUCT_SORT_FAIL,
+  PRODUCT_FILTER_REQUEST,
+  PRODUCT_FILTER_SUCCESS,
+  PRODUCT_FILTER_FAIL,
 } from "../constants/productConstants";
 
 // export const listProducts =
@@ -102,13 +108,24 @@ import {
 //   };
 
 export const listProducts =
-  (searchType = "keyword", query = "", pageNumber = 1, size = 20) =>
+  (
+    searchType = "keyword",
+    query = "",
+    pageNumber = 1,
+    size = 20,
+    isSorting = false
+  ) =>
   async (dispatch) => {
     try {
       dispatch({ type: PRODUCT_LIST_REQUEST });
 
       // Base URL for your backend
       const baseUrl = "http://localhost:8080/api/items";
+
+      if (isSorting) {
+        size = 1000;
+        pageNumber = 1;
+      }
 
       // Determine the endpoint based on searchType
       let url = "";
@@ -397,6 +414,64 @@ export const createProductReview =
         payload:
           error.response && error.response.data.detail
             ? error.response.data.detail
+            : error.message,
+      });
+    }
+  };
+
+export const sortProducts =
+  (items, sortBy = "price", direction = "asc", pageNumber = 1, size = 20) =>
+  async (dispatch) => {
+    try {
+      dispatch({ type: PRODUCT_SORT_REQUEST });
+
+      const { data } = await axios.post(
+        `http://localhost:8080/api/items/sort?sortBy=${sortBy}&direction=${direction}&page=${
+          pageNumber - 1
+        }&size=${size}`,
+        { items } // Pass the list of items to be sorted
+      );
+
+      dispatch({
+        type: PRODUCT_SORT_SUCCESS,
+        payload: data,
+      });
+    } catch (error) {
+      dispatch({
+        type: PRODUCT_SORT_FAIL,
+        payload:
+          error.response && error.response.data.message
+            ? error.response.data.message
+            : error.message,
+      });
+    }
+  };
+
+export const filterProducts =
+  (category = "", brand = "", pageNumber = 1, size = 20) =>
+  async (dispatch) => {
+    try {
+      dispatch({ type: PRODUCT_FILTER_REQUEST });
+
+      let url = `http://localhost:8080/api/items/filter?page=${
+        pageNumber - 1
+      }&size=${size}`;
+      if (category) url += `&category=${category}`;
+      if (brand) url += `&brand=${brand}`;
+      console.log("category", category);
+      console.log("url", url);
+      const { data } = await axios.get(url);
+      console.log("filterProducts data", data);
+      dispatch({
+        type: PRODUCT_FILTER_SUCCESS,
+        payload: data,
+      });
+    } catch (error) {
+      dispatch({
+        type: PRODUCT_FILTER_FAIL,
+        payload:
+          error.response && error.response.data.message
+            ? error.response.data.message
             : error.message,
       });
     }

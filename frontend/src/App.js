@@ -19,6 +19,7 @@ import SearchScreen from "./screens/SearchScreen";
 import PlaceOrderScreen from "./screens/PlaceOrderScreen";
 import MyOrderScreen from "./screens/MyOrderScreen";
 import OrderDetail from "./screens/OrderDetail";
+import AdminSalesHistory from "./screens/AdminSalesHistory";
 
 function App() {
   return (
@@ -45,6 +46,7 @@ function App() {
               <Route path="/placeorder" Component={PlaceOrderScreen} />
               <Route path="/myorder" Component={MyOrderScreen} />
               <Route path="/order/:id" Component={OrderDetail} />
+              <Route path="/admin/salesHistory" Component={AdminSalesHistory} />
             </Routes>
           </Router>
         </Container>

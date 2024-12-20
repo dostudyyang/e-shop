@@ -20,22 +20,22 @@ function PlaceOrderScreen({ history }) {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const cart = useSelector((state) => state.cart);
-
+  const [paymentAmount, setPaymentAmount] = useState(""); // State for input amount
+  const [paymentError, setPaymentError] = useState(null); // State for payment error
   cart.itemsPrice = cart.cartItems
     .reduce((acc, item) => acc + item.price * item.qty, 0)
     .toFixed(2);
   cart.shippingPrice = (cart.itemsPrice > 100 ? 0 : 10).toFixed(2);
   cart.taxPrice = Number(0.13 * cart.itemsPrice).toFixed(2);
 
-  cart.totalPrice = (
-    Number(cart.itemsPrice) +
-    Number(cart.shippingPrice) +
-    Number(cart.taxPrice)
-  ).toFixed(2);
+  cart.totalPrice = Number(cart.itemsPrice)
+    // Number(cart.shippingPrice) +
+    // Number(cart.taxPrice)
+    .toFixed(2);
   const totalPricePayment = cart.totalPrice;
-  if (!cart.paymentMethod) {
-    history.push("/payment");
-  }
+  // if (!cart.paymentMethod) {
+  //   history.push("/payment");
+  // }
 
   useEffect(() => {
     if (success) {
@@ -46,10 +46,15 @@ function PlaceOrderScreen({ history }) {
   }, [success, history]);
 
   const placeOrder = () => {
+    if (Number(paymentAmount) !== Number(cart.totalPrice)) {
+      setPaymentError("Credit Card Authorization Failed");
+      return;
+    }
     const itemQuantities = {};
     cart.cartItems.forEach((item) => {
       itemQuantities[item.id] = item.qty;
     });
+    console.log("itemQuantities", itemQuantities);
 
     dispatch(createOrder(userInfo, itemQuantities));
     dispatch(deliverOrder(userInfo));
@@ -122,14 +127,14 @@ function PlaceOrderScreen({ history }) {
                 <h2>Order Summary</h2>
               </ListGroup.Item>
 
-              <ListGroup.Item>
+              {/* <ListGroup.Item>
                 <Row>
                   <Col>Items:</Col>
                   <Col>${cart.itemsPrice}</Col>
                 </Row>
-              </ListGroup.Item>
+              </ListGroup.Item> */}
 
-              <ListGroup.Item>
+              {/* <ListGroup.Item>
                 <Row>
                   <Col>Shipping:</Col>
                   <Col>${cart.shippingPrice}</Col>
@@ -141,11 +146,13 @@ function PlaceOrderScreen({ history }) {
                   <Col>Tax:</Col>
                   <Col>${cart.taxPrice}</Col>
                 </Row>
-              </ListGroup.Item>
+              </ListGroup.Item> */}
 
               <ListGroup.Item>
                 <Row>
-                  <Col>Total:</Col>
+                  <Col>
+                    <strong>Total:</strong>
+                  </Col>
                   <Col>${cart.totalPrice}</Col>
                 </Row>
               </ListGroup.Item>
@@ -153,7 +160,23 @@ function PlaceOrderScreen({ history }) {
               <ListGroup.Item>
                 {error && <Message variant="danger">{error}</Message>}
               </ListGroup.Item>
-
+              <ListGroup.Item>
+                <Row>
+                  <Col>
+                    <strong>Enter Payment Amount:</strong>
+                  </Col>
+                  <Col>
+                    <input
+                      type="number"
+                      min="0"
+                      value={paymentAmount}
+                      onChange={(e) => setPaymentAmount(e.target.value)}
+                      placeholder="payment amount"
+                      style={{ width: "100%" }}
+                    />
+                  </Col>
+                </Row>
+              </ListGroup.Item>
               <ListGroup.Item>
                 <Button
                   type="button"
@@ -163,6 +186,34 @@ function PlaceOrderScreen({ history }) {
                 >
                   Place Order
                 </Button>
+              </ListGroup.Item>
+              <ListGroup.Item>
+                {paymentError && (
+                  <>
+                    <Message variant="danger">{paymentError}</Message>
+                    <Row className="mt-3">
+                      <Col>
+                        <Button
+                          variant="primary"
+                          onClick={() => {
+                            setPaymentError(null); // Clear error
+                            setPaymentAmount(""); // Reset input field
+                          }}
+                        >
+                          Retry Payment
+                        </Button>
+                      </Col>
+                      <Col>
+                        <Button
+                          variant="secondary"
+                          onClick={() => navigate("/")}
+                        >
+                          Quit
+                        </Button>
+                      </Col>
+                    </Row>
+                  </>
+                )}
               </ListGroup.Item>
             </ListGroup>
           </Card>
