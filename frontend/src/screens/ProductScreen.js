@@ -84,7 +84,7 @@ function ProductScreen() {
                 <ListGroup.Item>
                   <Rating
                     value={product.rating}
-                    text={`${product.numReviews} reviews`}
+                    text={` reviews`}
                     color={"#f8e825"}
                   />
                 </ListGroup.Item>

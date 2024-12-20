@@ -70,7 +70,7 @@ function UserEditScreen() {
     if (successUpdate) {
       dispatch({ type: USER_UPDATE_RESET });
       alert("update successful!");
-      navigate("/userProfile");
+      navigate("/");
     }
   }, [successUpdate, navigate, dispatch]);
 

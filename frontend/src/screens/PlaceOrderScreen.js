@@ -20,6 +20,8 @@ function PlaceOrderScreen({ history }) {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const cart = useSelector((state) => state.cart);
+  const [preservedCartItems, setPreservedCartItems] = useState([]);
+  const [preservedTotalPrice, setPreservedTotalPrice] = useState([]);
   const [paymentAmount, setPaymentAmount] = useState(""); // State for input amount
   const [paymentError, setPaymentError] = useState(null); // State for payment error
   cart.itemsPrice = cart.cartItems
@@ -37,11 +39,24 @@ function PlaceOrderScreen({ history }) {
   //   history.push("/payment");
   // }
 
+  // Preserve cart items on initial load
+  useEffect(() => {
+    if (cart.cartItems.length > 0) {
+      setPreservedCartItems(cart.cartItems); // Save current cart items to local state
+    }
+  }, [cart.cartItems]);
+
+  useEffect(() => {
+    if (cart.totalPrice > 0) {
+      setPreservedTotalPrice(cart.totalPrice); // Save current cart items to local state
+    }
+  }, [cart.totalPrice]);
+
   useEffect(() => {
     if (success) {
       alert("order successful!");
       dispatch({ type: ORDER_CREATE_RESET });
-      navigate("/");
+      // navigate("/");
     }
   }, [success, history]);
 
@@ -54,11 +69,10 @@ function PlaceOrderScreen({ history }) {
     cart.cartItems.forEach((item) => {
       itemQuantities[item.id] = item.qty;
     });
-    console.log("itemQuantities", itemQuantities);
 
     dispatch(createOrder(userInfo, itemQuantities));
     dispatch(deliverOrder(userInfo));
-    console.log("totalPricePayment", totalPricePayment);
+
     dispatch(payOrder(userInfo, totalPricePayment));
   };
 
@@ -90,32 +104,29 @@ function PlaceOrderScreen({ history }) {
 
             <ListGroup.Item>
               <h2>Order Items</h2>
-              {cart.cartItems.length === 0 ? (
-                <Message variant="info">Your cart is empty</Message>
-              ) : (
-                <ListGroup variant="flush">
-                  {cart.cartItems.map((item, index) => (
-                    <ListGroup.Item key={index}>
-                      <Row>
-                        <Col md={1}>
-                          <Image src={item.img} alt={item.name} fluid rounded />
-                        </Col>
+              <ListGroup variant="flush">
+                {(preservedCartItems.length > 0
+                  ? preservedCartItems
+                  : cart.cartItems
+                ).map((item, index) => (
+                  <ListGroup.Item key={index}>
+                    <Row>
+                      <Col md={1}>
+                        <Image src={item.img} alt={item.name} fluid rounded />
+                      </Col>
 
-                        <Col>
-                          <Link to={`/product/${item.product}`}>
-                            {item.name}
-                          </Link>
-                        </Col>
+                      <Col>
+                        <Link to={`/product/${item.product}`}>{item.name}</Link>
+                      </Col>
 
-                        <Col md={4}>
-                          {item.qty} X ${item.price} = $
-                          {(item.qty * item.price).toFixed(2)}
-                        </Col>
-                      </Row>
-                    </ListGroup.Item>
-                  ))}
-                </ListGroup>
-              )}
+                      <Col md={4}>
+                        {item.qty} X ${item.price} = $
+                        {(item.qty * item.price).toFixed(2)}
+                      </Col>
+                    </Row>
+                  </ListGroup.Item>
+                ))}
+              </ListGroup>
             </ListGroup.Item>
           </ListGroup>
         </Col>
@@ -153,7 +164,12 @@ function PlaceOrderScreen({ history }) {
                   <Col>
                     <strong>Total:</strong>
                   </Col>
-                  <Col>${cart.totalPrice}</Col>
+                  <Col>
+                    $
+                    {preservedTotalPrice > 0
+                      ? preservedTotalPrice
+                      : cart.totalPrice}
+                  </Col>
                 </Row>
               </ListGroup.Item>
 

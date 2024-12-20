@@ -14,7 +14,8 @@ function Product({ product }) {
         <Link to={`/product/${product.id}`}>
           <Card.Title as="div">
             <strong style={{ fontSize: "20px" }}>
-              {product.brand} {product.name}
+              {/* {product.brand}  */}
+              {product.name}
             </strong>
           </Card.Title>
         </Link>
@@ -23,7 +24,7 @@ function Product({ product }) {
           <div className="my-3" style={{ fontSize: "20px" }}>
             <Rating
               value={product.rating}
-              text={`${product.numReviews} reviews`}
+              text={` reviews`}
               color={"#f8e825"}
             />
           </div>

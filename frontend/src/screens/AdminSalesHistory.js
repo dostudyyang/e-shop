@@ -1,12 +1,16 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Row, Col, ListGroup, Button } from "react-bootstrap";
+import { Row, Col, ListGroup, Button, Form } from "react-bootstrap";
 import Message from "../components/Message";
 import Loader from "../components/Loader";
 import Paginate from "../components/Paginate"; // Optional pagination component
 import { listOrders } from "../redux/actions/orderActions";
 import { getUserInfo } from "../redux/actions/userActions";
+import { useNavigate } from "react-router-dom";
 function AdminSalesHistory() {
+  const [searchQuery, setSearchQuery] = useState("");
+  const [searchType, setSearchType] = useState("email");
+  const navigate = useNavigate();
   const dispatch = useDispatch();
 
   const userLogin = useSelector((state) => state.userLogin);
@@ -36,10 +40,56 @@ function AdminSalesHistory() {
   useEffect(() => {
     dispatch(listOrders());
   }, [dispatch]);
-  console.log("orders", orders);
+
+  const handleSearch = (e) => {
+    e.preventDefault();
+
+    if (searchType === "date") {
+      // Validate date format (YYYY-MM-DD)
+      const dateRegex = /^\d{4}-\d{2}-\d{2}$/;
+      if (!dateRegex.test(searchQuery.trim())) {
+        alert("Invalid date format. Please use YYYY-MM-DD (e.g., 2024-12-19).");
+        return;
+      }
+    }
+
+    if (searchQuery.trim()) {
+      navigate(`/admin/searchHistory?type=${searchType}&query=${searchQuery}`);
+    } else {
+      alert("Please enter a valid search term.");
+    }
+  };
+
   return (
     <div>
-      <h1>My Orders</h1>
+      <h1>Sale History</h1>
+      {/* Search Bar */}
+      <Form className="d-flex mb-4" onSubmit={handleSearch}>
+        <Form.Select
+          value={searchType}
+          onChange={(e) => setSearchType(e.target.value)}
+          className="me-2"
+        >
+          <option value="email">Email</option>
+          <option value="date">Date</option>
+          <option value="itemId">Item ID</option>
+        </Form.Select>
+        <Form.Control
+          type="search"
+          placeholder={
+            searchType === "date"
+              ? "Search by date, format YYYY-MM-DD"
+              : `Search by ${searchType}`
+          }
+          className="me-2"
+          aria-label="Search"
+          value={searchQuery}
+          onChange={(e) => setSearchQuery(e.target.value)}
+        />
+        <Button variant="outline-success" type="submit">
+          Search
+        </Button>
+      </Form>
       {loading ? (
         <Loader />
       ) : error ? (

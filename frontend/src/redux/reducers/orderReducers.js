@@ -21,6 +21,7 @@ import {
   ORDER_DELIVER_SUCCESS,
   ORDER_DELIVER_FAIL,
   ORDER_DELIVER_RESET,
+  ORDER_SEARCH_SUCCESS,
 } from "../constants/orderConstants";
 
 export const orderCreateReducer = (state = {}, action) => {
@@ -181,6 +182,14 @@ export const orderListReducer = (state = { orders: [] }, action) => {
         orders: action.payload._embedded.orders || [], // Use '_embedded.orders' for HAL response
         page: action.payload.page.number + 1, // Adjust for zero-based indexing
         pages: action.payload.page.totalPages,
+      };
+
+    case ORDER_SEARCH_SUCCESS:
+      return {
+        loading: false,
+        orders: action.payload.content || [], // Extract orders from 'content'
+        page: action.payload.pageable.pageNumber + 1, // Adjust for zero-based indexing
+        pages: action.payload.totalPages, // Total number of pages
       };
 
     case ORDER_LIST_FAIL:

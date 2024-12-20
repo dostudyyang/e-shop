@@ -20,7 +20,7 @@ import PlaceOrderScreen from "./screens/PlaceOrderScreen";
 import MyOrderScreen from "./screens/MyOrderScreen";
 import OrderDetail from "./screens/OrderDetail";
 import AdminSalesHistory from "./screens/AdminSalesHistory";
-
+import AdminSearchHistory from "./screens/AdminSearchHistory";
 function App() {
   return (
     <div>
@@ -47,6 +47,10 @@ function App() {
               <Route path="/myorder" Component={MyOrderScreen} />
               <Route path="/order/:id" Component={OrderDetail} />
               <Route path="/admin/salesHistory" Component={AdminSalesHistory} />
+              <Route
+                path="/admin/searchHistory"
+                Component={AdminSearchHistory}
+              />
             </Routes>
           </Router>
         </Container>
