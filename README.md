@@ -13,7 +13,7 @@ This is a full-stack e-commerce application built using React (Frontend) and Spr
 
 **GitHub Repository:** [E-Shop Project](https://github.com/dostudyyang/e-shop)
 
-The code package and SQL scripts are submitted on eClass
+The code package and SQL scripts have submitted on eClass
 
 ---
 
