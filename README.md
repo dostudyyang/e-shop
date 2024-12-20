@@ -1,5 +1,5 @@
 
-# E-Shop Project
+# EECS 4413 E-Shop Project
 
 ## Overview
 
