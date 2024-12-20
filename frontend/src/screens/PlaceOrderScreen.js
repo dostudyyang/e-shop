@@ -87,9 +87,9 @@ function PlaceOrderScreen({ history }) {
 
               <p>
                 <strong>Shipping: </strong>
-                {cart.shippingAddress.address}, {cart.shippingAddress.city}
+                {cart.shippingAddress.street}, {cart.shippingAddress.province}
                 {"  "}
-                {cart.shippingAddress.postalCode},{"  "}
+                {cart.shippingAddress.zip},{"  "}
                 {cart.shippingAddress.country}
               </p>
             </ListGroup.Item>
