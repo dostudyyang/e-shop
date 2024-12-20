@@ -7,11 +7,19 @@ This is a full-stack e-commerce application built using React (Frontend) and Spr
 
 ---
 
+### Authors
+- Yang Xu
+- Shang Yang
+
+**GitHub Repository:** [E-Shop Project](https://github.com/dostudyyang/e-shop)
+
+---
+
 ## Setup Instructions
 
 ### 1. Database Configuration
 #### Step 1: Run SQL Scripts
-1. Navigate to the `SQL` folder (or wherever your SQL scripts are located).
+1. Navigate to the `starter-files\SQL` folder (or wherever your SQL scripts are located).
 2. Execute the following scripts in order using your MySQL database client:
    - **`React-Springboot-Add-Tables-Script-1.sql`**: This will create all necessary tables in the database.
    - **`insert_statements.sql`**: This will insert sample item data into the `Item` table.
@@ -36,3 +44,6 @@ This is a full-stack e-commerce application built using React (Frontend) and Spr
 ```bash
     npm start
 ```
+
+### 3. Account SetUp
+You are free to create any types of account (Admin/Customer) in the register page.
