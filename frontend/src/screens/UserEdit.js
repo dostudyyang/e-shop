@@ -9,8 +9,8 @@ import Message from "../components/Message";
 import { USER_UPDATE_RESET } from "../redux/constants/userConstants";
 
 function UserEditScreen() {
-  // const { id } = useParams(); // Get userId from URL
-  const id = useSelector((state) => state.userLogin.userInfo);
+  const { id } = useParams(); // Get userId from URL
+  // const id = useSelector((state) => state.userLogin.userInfo);
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
