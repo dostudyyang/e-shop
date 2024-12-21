@@ -29,11 +29,11 @@ This is a full-stack e-commerce application built using React (Frontend) and Spr
 
 ## Setup Instructions
 
-### 1.Download zip and Extract it
+### 1. Download zip and Extract it
 
-### 2.Backend SetUp
+### 2. Backend SetUp
 
-Step 1:Import Existing Project:
+Step 1: Import Existing Project:
 
 - Open Eclipse IDE.
 - Navigate to `File > Import > Maven > Existing Maven Projects`.
