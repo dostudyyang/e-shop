@@ -55,9 +55,17 @@ Step 2: Edit Dependencies  (If Needed)
       <java.version>17</java.version> <!-- Update this to your local Java version -->
   </properties>
   ```
+Step 3: Update the following lines with your MySQL database credentials:
 
-Step 3: Run the Spring Boot Application
+   ```
+   spring.datasource.username=YOUR_USERNAME
+   spring.datasource.password=YOUR_PASSWORD
+   ```
 
+Step 4: Build and Run the Spring Boot Application
+- Select Maven > Update Project.
+  Check Force Update of Snapshots/Releases and click OK.
+  
 - Open a terminal in the root directory of the project.
 
 - Use the following commands to rebuild and start the application:
@@ -88,12 +96,7 @@ Step 3: Run the Spring Boot Application
 
 1. Open the `application.properties` file in the `backend` folder.
 
-2. Update the following lines with your MySQL database credentials:
 
-   ```
-   spring.datasource.username=YOUR_USERNAME
-   spring.datasource.password=YOUR_PASSWORD
-   ```
 
    
 
