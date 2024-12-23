@@ -56,6 +56,7 @@ Step 2: Edit Dependencies  (If Needed)
   </properties>
   ```
 Step 3: Update the following lines with your MySQL database credentials:
+- Open the `application.properties` file in the `backend` folder.
 
    ```
    spring.datasource.username=YOUR_USERNAME
@@ -90,11 +91,7 @@ Step 4: Build and Run the Spring Boot Application
    - **`React-Springboot-Add-Tables-Script-1.sql`**: This will create all necessary tables in the database.
    - **`insert_statements.sql`**: This will insert sample item data into the `Item` table.
 
-#### Step 2: Update `application.properties`
 
-
-
-1. Open the `application.properties` file in the `backend` folder.
 
 
 
